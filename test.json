@@ -1,0 +1,44 @@
+var testdb = 
+{
+	"type": "FeatureCollection",
+		"features": [
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Alexander Dubček elected",
+				"date": "0501",
+				"datetxt": "5th January",
+				"location": "Spanish Hall (Španělský sál), Prague, Czechoslovakia",
+				"description": "Alexander Dubček was elected First Secretary of the Communist Party of Czechoslovakia (KSČ)",
+				"keywords": "Prague Spring",
+				"image": "Dubcek.jpg"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [14.398496869087628, 50.09093080430242]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Start of the Battle of Khe Sanh",
+				"date": "2101",
+				"datetxt": "21st January",
+				"location": "Khe Sanh Combat Base, Quảng Trị Province, Republic of Vietnam",
+				"description": "Until 9th July",
+				"keywords": "Vietnam War",
+				"image": "KheSanh.jpg"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [106.72423, 16.65420]
+			}
+		
+		}
+		
+		
+		
+		
+	]
+}
