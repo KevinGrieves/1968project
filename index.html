@@ -20,6 +20,9 @@
         width: 100%;
     }
     
+    #map {
+		background-color: #AAD3DF;
+	}
 	
 	.mainmap {
 		z-index:0;
@@ -82,8 +85,9 @@
 	<div id="map" class="mainmap flex-fill"></div>	
 
 	<div class="logo">
-        <nav class="navbar navbar-expand-sm bg-transparent ms-2 p-1" id="topnav">
-			<img src="1968logo.png" width="300" class="img-fluid">
+        <nav class="navbar navbar-expand-sm bg-transparent ms-3 p-1" id="topnav">
+<!--			<img src="1968logo.png" width="300" class="img-fluid">   -->
+			<h2>1968 Project</h2>
 			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
             </button>
@@ -96,9 +100,7 @@
                 </div>
                 <div class="flex-column h-100">
 					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .8;">
-						<p>January 1968<br>
-						Dates<br>
-						Dates</p>
+						<p>January 1968<br>Put a date picker here</p>
 						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoBox">
 							Show
 						</button>
@@ -119,11 +121,18 @@
 
 </body>
 <script src="test.json" type="text/javascript"></script>
+<script src="CShapes-2.0.geojson" type="text/javascript"></script>
+
+
 <script>
 	
 	var map = L.map('map', {
-		center:[20, 0],
+		worldCopyJump: true,
+		center:[40, -10],
+		zoomSnap: 0.25,
 		zoom: 2.5,
+		maxZoom: 19,
+		minZoom: 2,
 		zoomControl: false
 	});
 
@@ -133,8 +142,7 @@
 
 
 	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
-		
+		noWrap: true
 		
 	}).addTo(map);
 	
@@ -159,6 +167,23 @@
 
 	}
 	
+	function cntryClick(e) {
+  		
+  		clickedCntry = e.target;
+  		cntryName = clickedCntry.feature.properties.cntry_name;
+  		
+  		
+  		let ibHead = document.getElementById('infoBoxHead');
+  		ibHead.innerHTML='<h4>' + cntryName + '</h4>';
+  		let ibBody = document.getElementById('infoBoxBody');
+  		ibBody.innerHTML='Put something here';
+  		$("#infoBox").modal('show');
+		
+		
+		
+
+	}
+	
 	function onEachFeature(feature, layer) {
 		let txt = document.getElementById('eventList');
 		// Create DOM nodes with onclick yuk!
@@ -168,6 +193,23 @@
 		});
 		
 	}
+
+	function onEachCountry(feature, layer) {
+		layer.on({
+			click: cntryClick
+		});
+		
+	}
+
+	var cntryLayer = new L.geoJSON(countries68, {
+		onEachFeature: onEachCountry
+	}).addTo(map);
+	
+	cntryLayer.setStyle({
+		color: "#ff4000", 
+		weight: 1, 
+		opacity: 0.3
+	});
 
 	L.geoJSON(testdb, {
 		onEachFeature: onEachFeature
