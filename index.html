@@ -28,11 +28,11 @@
 		z-index:0;
 	}
 	
-	.logo {
+	.sidebar {
 		top:0;
 		position:absolute;
 		z-index:100;
-		width:300px;
+		width:0px;
 		
 	}
 	
@@ -46,7 +46,6 @@
 	}
 	
 
-	
 
 	
 </style>
@@ -57,8 +56,8 @@
 
 <body>
 	
-	
-	
+
+	<!-- Modal -->
 	<div class="infoBox modal fade" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
@@ -84,21 +83,24 @@
 	
 	<div id="map" class="mainmap flex-fill"></div>	
 
-	<div class="logo">
+	<div class="sidebar vh-100">
+        
         <nav class="navbar navbar-expand-sm bg-transparent ms-3 p-1" id="topnav">
-<!--			<img src="1968logo.png" width="300" class="img-fluid">   -->
-			<h2>1968 Project</h2>
+			 
 			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
             </button>
             
         </nav>
-        <div class="container-fluid d-flex m-0 p-0">
-			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-md offcanvas-start h-100">
+        <div class="container-fluid d-flex m-0 p-0 h-100">
+			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-md offcanvas-start">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-label="Close"></button>
                 </div>
                 <div class="flex-column h-100">
+					<div class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .8; width:200px;">
+						<img src="./images/1968logo.png" width="300" class="img-fluid">  
+					</div>
 					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .8;">
 						<p>January 1968<br>Put a date picker here</p>
 						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoBox">
@@ -106,9 +108,8 @@
 						</button>
 
 					</div>
-					<div id="eventList" class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .8;">
-						<p><b>Events</b><br>
-						</p>
+					<div id="eventList" class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .8; height: calc(100vh - 300px);">
+						<p><b>Events</b></p>
 					</div>
 				</div>
 			</nav>
@@ -117,7 +118,7 @@
 	
 	</div>
 	
-
+	
 
 </body>
 <script src="test.json" type="text/javascript"></script>
@@ -125,7 +126,7 @@
 
 
 <script>
-	
+
 	var map = L.map('map', {
 		worldCopyJump: true,
 		center:[40, -10],
@@ -185,9 +186,38 @@
 	}
 	
 	function onEachFeature(feature, layer) {
-		let txt = document.getElementById('eventList');
+		
 		// Create DOM nodes with onclick yuk!
-        txt.innerHTML=txt.innerHTML + '<p>' + feature.properties.title + '</p>';
+		const eventLst = document.getElementById('eventList');
+		const newEvent = document.createElement('a');
+		const brk = document.createElement('br');
+		newEvent.href = "#";
+		newEvent.innerText = feature.properties.title;
+		newEvent.onclick = function () {
+				eventTitle = feature.properties.title;
+				eventLoc = feature.properties.location;
+				eventBlurb = feature.properties.description;
+				eventDate = feature.properties.datetxt;
+				eventKeys = feature.properties.keywords;
+				eventImg = feature.properties.image;
+				
+				let ibHead = document.getElementById('infoBoxHead');
+				ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
+				let ibBody = document.getElementById('infoBoxBody');
+				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><img src="./images/' + eventImg + '" class="img-fluid"><br><p>' + eventBlurb + '</p><p><i>' + eventKeys + '</i><p>';
+				var coOrds = layer.getLatLng();
+				
+				map.flyTo([coOrds.lat, coOrds.lng], 5);
+				$("#infoBox").modal('show');
+				
+			};
+		
+		eventLst.appendChild(newEvent);
+		eventLst.appendChild(brk);
+		
+		
+		
+<!--        eventLst.innerHTML=eventLst.innerHTML + '<p>' + feature.properties.title + '</p>'; -->
 		layer.on({
 			click: markerClick
 		});
