@@ -45,6 +45,21 @@
 		z-index: 150;
 	}
 	
+	.loading-screen {
+		background-color: #300030;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1000;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		opacity: 80%;
+		transition: all 0.2s; 
+	}
 
 
 	
@@ -55,7 +70,21 @@
 </head>
 
 <body>
+	<!-- Loading page -->
+	<div class="loading-screen">
+		<div class="p-1">
+			<img src="./images/1968logo.png" width="600" class="img-fluid">
+		</div>
+		
+		
+		<div class="spinner-border text-white" role="status">
+			
+			<span class="visually-hidden">Loading...</span>
+		</div>
+
 	
+	
+	</div>
 
 	<!-- Modal -->
 	<div class="infoBox modal fade" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -80,9 +109,11 @@
 	
 	
 	
-	
+	<!-- Map -->
 	<div id="map" class="mainmap flex-fill"></div>	
-
+	
+	
+	<!-- Responsive sidebar -->
 	<div class="sidebar vh-100">
         
         <nav class="navbar navbar-expand-sm bg-transparent ms-3 p-1" id="topnav">
@@ -126,7 +157,24 @@
 
 
 <script>
-
+	const loadingScreen = document.querySelector('.loading-screen');
+	window.addEventListener('load', () => {
+			loadingScreen.style.opacity = '0';
+			setTimeout(() => {
+				
+				loadingScreen.style.display ='none';
+			}, 200);
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	var map = L.map('map', {
 		worldCopyJump: true,
 		center:[40, -10],
