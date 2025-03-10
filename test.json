@@ -28,15 +28,32 @@ var testdb =
 				"location": "Khe Sanh Combat Base, Quảng Trị Province, Republic of Vietnam",
 				"description": "Until 9th July",
 				"keywords": "Vietnam War",
-				"image": "KheSanh.jpg"
+				"image": "KheSanh.jpg"				
 			},
 			"geometry": {
 				"type": "Point",
 				"coordinates": [106.72423, 16.65420]
 			}
 		
-		}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "First Royal Navy submarine test firing of Polaris missile",
+				"date": "1502",
+				"datetxt": "15th February",
+				"location": "Eastern Test Range, Atlantic Ocean",
+				"description": "The Royal Navy makes the first test firing of a Polaris nuclear ballistic missile, from the submarine HMS Resolution.",
+				"keywords": "Nuclear weapons",
+				"image": "PolarisUK.jpg",
+				"attr": "<a href='https://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>CC BY-SA 4.0</a> Emőke Dénes, British Polaris Missile at the Imperial War Museum in London, England. <a href='https://commons.wikimedia.org/wiki/File:British_Polaris_Missile_-_Imperial_War_Museum_1.jpg' target='_blank'>Source</a>"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-79, 28.5]
+			}
 		
+		}
 		
 		
 		

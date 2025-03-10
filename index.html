@@ -20,6 +20,15 @@
         width: 100%;
     }
     
+    a {
+		text-decoration:none;
+	}
+	
+	a:hover {
+		font-style:bold;
+		color:#000;
+    }
+    
     #map {
 		background-color: #AAD3DF;
 	}
@@ -46,7 +55,7 @@
 	}
 	
 	.loading-screen {
-		background-color: #300030;
+		background-color: #000020;
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -72,8 +81,8 @@
 <body>
 	<!-- Loading page -->
 	<div class="loading-screen">
-		<div class="p-1">
-			<img src="./images/1968logo.png" width="600" class="img-fluid">
+		<div class="p-2">
+			<img src="./images/1968logo.png" width="800" class="img-fluid">
 		</div>
 		
 		
@@ -97,7 +106,7 @@
 		  <div class="modal-body" id="infoBoxBody">
 			<h2>Modal</h2>
 		  </div>
-		  <div class="modal-footer">
+		  <div class="modal-footer" id="infoBoxFoot">
 			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			
 		  </div>
@@ -118,12 +127,13 @@
         
         <nav class="navbar navbar-expand-sm bg-transparent ms-3 p-1" id="topnav">
 			 
-			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler border border-3 border-dark bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
+				
             </button>
             
         </nav>
-        <div class="container-fluid d-flex m-0 p-0 h-100">
+        <div class="container-fluid d-flex m-0 p-0">
 			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-md offcanvas-start">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-label="Close"></button>
@@ -134,10 +144,22 @@
 					</div>
 					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .8;">
 						<p>January 1968<br>Put a date picker here</p>
-						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoBox">
+<!--						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoBox">
 							Show
-						</button>
-
+						</button>   -->
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Select Topic
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#" onclick="filterKey = 'all'; refreshMap();">All</a></li>
+								<li><a class="dropdown-item" href="#" onclick="filterKey = 'Nuclear weapons'; refreshMap();">Nuclear weapons</a></li>
+								<li><a class="dropdown-item" href="#" onclick="filterKey = 'Prague Spring'; refreshMap();">Prague Spring</a></li>
+								<li><a class="dropdown-item" href="#" onclick="filterKey = 'Vietnam War'; refreshMap();">Vietnam War</a></li>
+							
+								
+							</ul>
+						</div>
 					</div>
 					<div id="eventList" class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .8; height: calc(100vh - 300px);">
 						<p><b>Events</b></p>
@@ -162,18 +184,13 @@
 			loadingScreen.style.opacity = '0';
 			setTimeout(() => {
 				
-				loadingScreen.style.display ='none';
+				loadingScreen.style.display = 'none';
 			}, 200);
 		
 	});
 	
 	
-	
-	
-	
-	
-	
-	
+	var filterKey = 'all';	
 	
 	var map = L.map('map', {
 		worldCopyJump: true,
@@ -189,7 +206,6 @@
 		position: 'bottomright'
 	}).addTo(map);
 
-
 	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		noWrap: true
 		
@@ -204,11 +220,31 @@
   		eventDate = clickedMarker.feature.properties.datetxt;
   		eventKeys = clickedMarker.feature.properties.keywords;
   		eventImg = clickedMarker.feature.properties.image;
+  		if (clickedMarker.feature.properties.attr == null) {
+            eventAttr = ""
+        } else {
+            eventAttr = '<span style="font-size:50%;">' + clickedMarker.feature.properties.attr + '</span>'
+        };
   		
   		let ibHead = document.getElementById('infoBoxHead');
   		ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
   		let ibBody = document.getElementById('infoBoxBody');
-  		ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><img src="./images/' + eventImg + '" class="img-fluid"><br><p>' + eventBlurb + '</p><p><i>' + eventKeys + '</i><p>';
+  		ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><img src="./images/' + eventImg + '" class="img-fluid">' + eventAttr + '<br><p>' + eventBlurb + '</p>';
+  		
+  		const kwordLink = document.createElement('a');
+		kwordLink.href = "#";
+		kwordLink.innerText = eventKeys;
+		kwordLink.setAttribute("style", "font-style:italic;");
+		kwordLink.onclick = function () {
+			filterKey = eventKeys;
+			$("#infoBox").modal('hide');
+			refreshMap();
+		};
+		ibBody.appendChild(kwordLink);
+  		
+  		
+  		
+  		
   		$("#infoBox").modal('show');
 		
 		
@@ -238,9 +274,10 @@
 		// Create DOM nodes with onclick yuk!
 		const eventLst = document.getElementById('eventList');
 		const newEvent = document.createElement('a');
-		const brk = document.createElement('br');
+		
 		newEvent.href = "#";
 		newEvent.innerText = feature.properties.title;
+		newEvent.setAttribute("style", "display:block; padding-bottom:6px;");
 		newEvent.onclick = function () {
 				eventTitle = feature.properties.title;
 				eventLoc = feature.properties.location;
@@ -252,20 +289,34 @@
 				let ibHead = document.getElementById('infoBoxHead');
 				ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
 				let ibBody = document.getElementById('infoBoxBody');
-				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><img src="./images/' + eventImg + '" class="img-fluid"><br><p>' + eventBlurb + '</p><p><i>' + eventKeys + '</i><p>';
-				var coOrds = layer.getLatLng();
+				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><img src="./images/' + eventImg + '" class="img-fluid">' + eventAttr + '<br><p>' + eventBlurb + '</p>';
 				
+				
+				const kwordLink = document.createElement('a');
+				kwordLink.href = "#";
+				kwordLink.innerText = eventKeys;
+				kwordLink.setAttribute("style", "");
+				kwordLink.onclick = function () {
+					filterKey = eventKeys;
+					$("#infoBox").modal('hide');
+					refreshMap();
+				};
+				
+				
+				ibBody.appendChild(kwordLink);
+				
+				
+				var coOrds = layer.getLatLng();
 				map.flyTo([coOrds.lat, coOrds.lng], 5);
 				$("#infoBox").modal('show');
 				
 			};
 		
 		eventLst.appendChild(newEvent);
-		eventLst.appendChild(brk);
 		
+
 		
-		
-<!--        eventLst.innerHTML=eventLst.innerHTML + '<p>' + feature.properties.title + '</p>'; -->
+
 		layer.on({
 			click: markerClick
 		});
@@ -288,14 +339,36 @@
 		weight: 1, 
 		opacity: 0.3
 	});
-
-	L.geoJSON(testdb, {
-		onEachFeature: onEachFeature
-	}).addTo(map);	
-
-
 	
+	
+	
+	function keywordFilter(feature) {
+		if (filterKey === 'all') {
+			return true
+		} else {
+		if (feature.properties.keywords === filterKey) return true
+		}
+	}
 
+	function refreshMap() {
+		let newEventList = document.getElementById('eventList');
+		newEventList.innerHTML='<p><b>Events</b></p>';
+		
+		
+		markerLayer.clearLayers();
+		markerLayer = L.geoJSON(testdb, {
+			filter: keywordFilter,
+			onEachFeature: onEachFeature
+		}).addTo(map);
+		map.flyTo([40, -10], 2.5)
+		
+	}
+	
+	
+	var markerLayer = new L.geoJSON(testdb, {
+		filter: keywordFilter,
+		onEachFeature: onEachFeature
+	}).addTo(map);
 
 
 
