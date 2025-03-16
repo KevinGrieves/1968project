@@ -12,7 +12,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Put a description of the content and function of each separate page here including appropriate key words">
+	<meta name="description" content="The 1968 Project is an interactive map of the key events of this tumultuous year">
 	<meta charset="UTF-8">
 <style>
 	html, body, #map {
@@ -53,6 +53,14 @@
 	.modal-backdrop {
 		z-index: 150;
 	}
+	
+	.modal-article {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 15px;
+		
+	}
+           
 	
 	.loading-screen {
 		background-color: #000020;
@@ -96,7 +104,7 @@
 	</div>
 
 	<!-- Modal -->
-	<div class="infoBox modal fade" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="infoBox modal fade h-75" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
 		  <div class="modal-header" id="infoBoxHead">
@@ -143,25 +151,59 @@
 						<img src="./images/1968logo.png" width="300" class="img-fluid">  
 					</div>
 					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .8;">
-						<p>January 1968<br>Put a date picker here</p>
-<!--						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoBox">
-							Show
-						</button>   -->
-						<div class="dropdown">
-							<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<div class="form-check">
+							<label class="form-check-label" for="chkDate">Filter by date</label>
+							<input type="checkbox" class="form-check-input" id="chkDate" name="dateFltr" onchange='dateChk(this);'>
+							
+						</div>
+						
+						<div id="datePicker" class="collapse">
+						
+							<ul class="nav nav-pills"  role="tablist">
+								<li>
+									<a class="nav-link active" data-bs-toggle="tab" href="#monthTab" onclick="clickMonth()">Month</a>
+								</li>
+								
+								<li class="nav-item">
+									<a class="nav-link" data-bs-toggle="tab" href="#dayTab" onclick="clickDay()">Day</a>
+								</li>
+								
+							</ul>
+						
+							<div class="tab-content mt-1">
+								<div id="monthTab" class="container tab-pane active p-0">
+									<input class="form-control" id="selMonth" type="month" value="1968-01" min="1968-01" max="1968-12" onchange="changeMonth(value);">
+								</div>
+								<div id="dayTab" class="container tab-pane fade p-0">
+									<input class="form-control" id="selDate" type="date" value="1968-01-01" min="1968-01-01" max="1968-12-31" onchange="changeDay(value);">
+								</div>
+							</div>
+
+						</div>
+						
+						
+						
+						
+						<br>
+						
+						
+						<div class="dropdown mt-2">
+							<button id="topicBtn" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Select Topic
 							</button>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#" onclick="filterKey = 'all'; refreshMap();">All</a></li>
-								<li><a class="dropdown-item" href="#" onclick="filterKey = 'Nuclear weapons'; refreshMap();">Nuclear weapons</a></li>
-								<li><a class="dropdown-item" href="#" onclick="filterKey = 'Prague Spring'; refreshMap();">Prague Spring</a></li>
-								<li><a class="dropdown-item" href="#" onclick="filterKey = 'Vietnam War'; refreshMap();">Vietnam War</a></li>
+								
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('all');">All</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Disaster');">Disaster</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Nuclear weapons');">Nuclear weapons</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Prague Spring');">Prague Spring</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Vietnam War');">Vietnam War</a></li>
 							
 								
 							</ul>
 						</div>
 					</div>
-					<div id="eventList" class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .8; height: calc(100vh - 300px);">
+					<div id="eventList" class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .8; height: calc(100vh - 400px);">
 						<p><b>Events</b></p>
 					</div>
 				</div>
@@ -191,6 +233,8 @@
 	
 	
 	var filterKey = 'all';	
+	var fltDay = 0;
+	var fltMonth = 0;
 	
 	var map = L.map('map', {
 		worldCopyJump: true,
@@ -201,6 +245,8 @@
 		minZoom: 2,
 		zoomControl: false
 	});
+	
+
 
 	L.control.zoom({
 		position: 'bottomright'
@@ -220,6 +266,7 @@
   		eventDate = clickedMarker.feature.properties.datetxt;
   		eventKeys = clickedMarker.feature.properties.keywords;
   		eventImg = clickedMarker.feature.properties.image;
+  		
   		if (clickedMarker.feature.properties.attr == null) {
             eventAttr = ""
         } else {
@@ -229,8 +276,8 @@
   		let ibHead = document.getElementById('infoBoxHead');
   		ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
   		let ibBody = document.getElementById('infoBoxBody');
-  		ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><img src="./images/' + eventImg + '" class="img-fluid">' + eventAttr + '<br><p>' + eventBlurb + '</p>';
-  		
+  		ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right;  margin-left:5px;"><img src="./images/' + eventImg + '" class="img-fluid border">' + eventAttr + '</div><p>' + eventBlurb + '</p>';
+
   		const kwordLink = document.createElement('a');
 		kwordLink.href = "#";
 		kwordLink.innerText = eventKeys;
@@ -278,6 +325,9 @@
 		newEvent.href = "#";
 		newEvent.innerText = feature.properties.title;
 		newEvent.setAttribute("style", "display:block; padding-bottom:6px;");
+		newEvent.setAttribute("data-bs-dismiss", "offcanvas");
+		newEvent.setAttribute("data-bs-target", "#leftnav");
+		
 		newEvent.onclick = function () {
 				eventTitle = feature.properties.title;
 				eventLoc = feature.properties.location;
@@ -286,10 +336,15 @@
 				eventKeys = feature.properties.keywords;
 				eventImg = feature.properties.image;
 				
+				if (feature.properties.attr == null) {
+					eventAttr = ""
+				} else {
+					eventAttr = '<span style="font-size:50%;">' + feature.properties.attr + '</span>'
+				};
 				let ibHead = document.getElementById('infoBoxHead');
 				ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
 				let ibBody = document.getElementById('infoBoxBody');
-				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><img src="./images/' + eventImg + '" class="img-fluid">' + eventAttr + '<br><p>' + eventBlurb + '</p>';
+				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right; margin-left:5px;"><img src="./images/' + eventImg + '" class="img-fluid border">' + eventAttr + '</div><p>' + eventBlurb + '</p>';
 				
 				
 				const kwordLink = document.createElement('a');
@@ -307,7 +362,7 @@
 				
 				
 				var coOrds = layer.getLatLng();
-				map.flyTo([coOrds.lat, coOrds.lng], 5);
+				map.flyTo([(coOrds.lat + 10), coOrds.lng], 5);
 				$("#infoBox").modal('show');
 				
 			};
@@ -342,12 +397,29 @@
 	
 	
 	
-	function keywordFilter(feature) {
-		if (filterKey === 'all') {
-			return true
-		} else {
-		if (feature.properties.keywords === filterKey) return true
+	function applyFilter(feature) {
+		
+		if (chkDate.checked === true) {
+			if (fltDay > 0) {
+				if (feature.properties.day !== fltDay) {
+					return false;
+				}
+			}
+			if (fltMonth > 0) {
+				if (feature.properties.month !== fltMonth) {
+					return false;
+				}
+			}
 		}
+		
+		if (filterKey !== 'all') {
+			if (feature.properties.keywords !== filterKey) return false;
+		}
+		
+		return true;
+			
+		
+
 	}
 
 	function refreshMap() {
@@ -357,7 +429,7 @@
 		
 		markerLayer.clearLayers();
 		markerLayer = L.geoJSON(testdb, {
-			filter: keywordFilter,
+			filter: applyFilter,
 			onEachFeature: onEachFeature
 		}).addTo(map);
 		map.flyTo([40, -10], 2.5)
@@ -366,11 +438,58 @@
 	
 	
 	var markerLayer = new L.geoJSON(testdb, {
-		filter: keywordFilter,
+		
 		onEachFeature: onEachFeature
 	}).addTo(map);
 
+	function changeDay(date) {
+		var spltDate = date.split('-');
+		fltMonth = spltDate[1];
+		fltDay = spltDate[2];
+		selMonth.value = "1968-" + spltDate[1];
+		refreshMap();
+		<!-- Change Month to match -->
+	}
+	
+	function changeMonth(date) {
+		var spltDate = date.split('-');
+		fltMonth = spltDate[1];
+		fltDay = 0;
+		refreshMap();
+	}
+	
+	function clickMonth() {
+		fltDay = 0;
+		refreshMap();
+	}
+	
+	function clickDay() {
+		var spltDate = selDate.value.split('-');
+		fltDay = spltDate[2];
+		
+		refreshMap();
 
+	}
+	
+	function dateChk(checkbox) {
+		if(checkbox.checked == true){
+			document.getElementById('datePicker').classList.remove('collapse');
+		}else{
+			document.getElementById('datePicker').classList.add('collapse');
+			<!-- Reset dates ? -->
+	   };
+	   refreshMap();
+	   
+	}
+
+	function changeKeyword(keyword) {
+		filterKey = keyword;
+		if (keyword === 'all') {
+			topicBtn.innerHTML = 'Select Topic';
+		} else  topicBtn.innerHTML = keyword;
+		refreshMap();
+		
+	}
 
 </script>
 

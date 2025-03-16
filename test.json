@@ -6,7 +6,8 @@ var testdb =
 			"type": "Feature",
 			"properties": {
 				"title": "Alexander Dubček elected",
-				"date": "0501",
+				"day": "05",
+				"month": "01",
 				"datetxt": "5th January",
 				"location": "Spanish Hall (Španělský sál), Prague, Czechoslovakia",
 				"description": "Alexander Dubček was elected First Secretary of the Communist Party of Czechoslovakia (KSČ)",
@@ -23,7 +24,8 @@ var testdb =
 			"type": "Feature",
 			"properties": {
 				"title": "Start of the Battle of Khe Sanh",
-				"date": "2101",
+				"day": "21",
+				"month": "01",
 				"datetxt": "21st January",
 				"location": "Khe Sanh Combat Base, Quảng Trị Province, Republic of Vietnam",
 				"description": "Until 9th July",
@@ -40,7 +42,8 @@ var testdb =
 			"type": "Feature",
 			"properties": {
 				"title": "First Royal Navy submarine test firing of Polaris missile",
-				"date": "1502",
+				"day": "15",
+				"month": "02",
 				"datetxt": "15th February",
 				"location": "Eastern Test Range, Atlantic Ocean",
 				"description": "The Royal Navy makes the first test firing of a Polaris nuclear ballistic missile, from the submarine HMS Resolution.",
@@ -53,8 +56,26 @@ var testdb =
 				"coordinates": [-79, 28.5]
 			}
 		
-		}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Collapse of Ronan Point",
+				"day": "16",
+				"month": "05",
+				"datetxt": "16th May",
+				"location": "Newham, East London",
+				"description": "At around 5:45 in the morning of Thursday 16th May 1968, in flat 90 of the newly completed Ronan Point high-rise housing block in Newham, East London, a 56 year old woman called Ivy Hodge struck a match to light the gas stove for her early morning cup of tea. The flame ignited the gas that had collected in the room from a leaky connection to the cooker. The explosion blew out a load-bearing wall causing the complete collapse of one corner of the building as the four flats above Ivy's came crashing down.<br><br>Ivy survived the collapse by being blown clear by the explosion; however, four people died and another seventeen received injuries. The death toll would certainly have been higher if all the flats in the newly opened building had been occupied. The building was repaired and strengthened to avoid a repeat of the tragedy, which prompted the Government to tighten up building regulations.",
+				"keywords": "Disaster",
+				"image": "RonanPoint.jpg",
+				"attr": "<a href='https://creativecommons.org/licenses/by-sa/2.0/' target='_blank'>CC BY-SA 2.0</a> Derek Voller, Ronan Point collapse, Canning Town. <a href='https://en.wikipedia.org/wiki/File:Ronan_Point_collapse_closeup.jpg' target='_blank'>Source</a>"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.0215, 51.5129]
+			}
 		
+		}
 		
 		
 	]
