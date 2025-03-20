@@ -172,10 +172,10 @@
 						
 							<div class="tab-content mt-1">
 								<div id="monthTab" class="container tab-pane active p-0">
-									<input class="form-control" id="selMonth" type="month" value="1968-01" min="1968-01" max="1968-12" onchange="changeMonth(value);">
+									<input class="form-control" id="selMonth" type="month" value="0" min="1968-01" max="1968-12" onchange="changeMonth(value);">
 								</div>
 								<div id="dayTab" class="container tab-pane fade p-0">
-									<input class="form-control" id="selDate" type="date" value="1968-01-01" min="1968-01-01" max="1968-12-31" onchange="changeDay(value);">
+									<input class="form-control" id="selDate" type="date" value="0" min="1968-01-01" max="1968-12-31" onchange="changeDay(value);">
 								</div>
 							</div>
 
@@ -197,8 +197,8 @@
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Disaster');">Disaster</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Nuclear weapons');">Nuclear weapons</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Prague Spring');">Prague Spring</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Technology');">Technology</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Vietnam War');">Vietnam War</a></li>
-							
 								
 							</ul>
 						</div>
@@ -235,6 +235,7 @@
 	var filterKey = 'all';	
 	var fltDay = 0;
 	var fltMonth = 0;
+	var prevDate = '';
 	
 	var map = L.map('map', {
 		worldCopyJump: true,
@@ -266,6 +267,7 @@
   		eventDate = clickedMarker.feature.properties.datetxt;
   		eventKeys = clickedMarker.feature.properties.keywords;
   		eventImg = clickedMarker.feature.properties.image;
+  		eventAlt = clickedMarker.feature.properties.alt;
   		
   		if (clickedMarker.feature.properties.attr == null) {
             eventAttr = ""
@@ -276,18 +278,20 @@
   		let ibHead = document.getElementById('infoBoxHead');
   		ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
   		let ibBody = document.getElementById('infoBoxBody');
-  		ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right;  margin-left:5px;"><img src="./images/' + eventImg + '" class="img-fluid border">' + eventAttr + '</div><p>' + eventBlurb + '</p>';
+  		ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right;  margin-left:8px;"><img src="./images/' + eventImg + '" class="img-fluid" alt="' + eventAlt + '" title="' + eventAlt + '" >' + eventAttr + '</div><p>' + eventBlurb + '</p>';
 
-  		const kwordLink = document.createElement('a');
-		kwordLink.href = "#";
-		kwordLink.innerText = eventKeys;
-		kwordLink.setAttribute("style", "font-style:italic;");
-		kwordLink.onclick = function () {
-			filterKey = eventKeys;
-			$("#infoBox").modal('hide');
-			refreshMap();
+  		if (eventKeys.indexOf(', ') == -1) {
+			createKeylink(eventKeys)
+		} else {
+			var spltKeys = eventKeys.split(', ');
+			createKeylink(spltKeys[0]);
+			const breakKeys = document.createElement('br');
+			ibBody.appendChild(breakKeys);
+			createKeylink(spltKeys[1]);
+			
 		};
-		ibBody.appendChild(kwordLink);
+  		
+  	
   		
   		
   		
@@ -318,10 +322,23 @@
 	
 	function onEachFeature(feature, layer) {
 		
-		// Create DOM nodes with onclick yuk!
-		const eventLst = document.getElementById('eventList');
-		const newEvent = document.createElement('a');
 		
+		const eventLst = document.getElementById('eventList');
+		
+		const newDate = document.createElement('p');
+		if (prevDate !== feature.properties.datetxt) {
+			newDate.innerText = feature.properties.datetxt;
+		};
+		newDate.setAttribute("style", "font-size:70%; margin-bottom:0;");
+		
+		prevDate = feature.properties.datetxt;
+		
+		
+		
+		
+		
+		
+		const newEvent = document.createElement('a');
 		newEvent.href = "#";
 		newEvent.innerText = feature.properties.title;
 		newEvent.setAttribute("style", "display:block; padding-bottom:6px;");
@@ -335,6 +352,7 @@
 				eventDate = feature.properties.datetxt;
 				eventKeys = feature.properties.keywords;
 				eventImg = feature.properties.image;
+				eventAlt = feature.properties.alt;
 				
 				if (feature.properties.attr == null) {
 					eventAttr = ""
@@ -344,21 +362,21 @@
 				let ibHead = document.getElementById('infoBoxHead');
 				ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
 				let ibBody = document.getElementById('infoBoxBody');
-				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right; margin-left:5px;"><img src="./images/' + eventImg + '" class="img-fluid border">' + eventAttr + '</div><p>' + eventBlurb + '</p>';
+				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right; margin-left:8px;"><img src="./images/' + eventImg + '" class="img-fluid" alt="' + eventAlt + '" title="' + eventAlt + '" >' + eventAttr + '</div><p>' + eventBlurb + '</p>';
 				
 				
-				const kwordLink = document.createElement('a');
-				kwordLink.href = "#";
-				kwordLink.innerText = eventKeys;
-				kwordLink.setAttribute("style", "");
-				kwordLink.onclick = function () {
-					filterKey = eventKeys;
-					$("#infoBox").modal('hide');
-					refreshMap();
+				//Multi Keyword
+				if (eventKeys.indexOf(', ') == -1) {
+					createKeylink(eventKeys)
+				} else {
+				var spltKeys = eventKeys.split(', ');
+				createKeylink(spltKeys[0]);
+				const breakKeys = document.createElement('br');
+				ibBody.appendChild(breakKeys);
+				createKeylink(spltKeys[1]);
+			
 				};
 				
-				
-				ibBody.appendChild(kwordLink);
 				
 				
 				var coOrds = layer.getLatLng();
@@ -367,6 +385,7 @@
 				
 			};
 		
+		eventLst.appendChild(newDate);
 		eventLst.appendChild(newEvent);
 		
 
@@ -377,7 +396,24 @@
 		});
 		
 	}
-
+	
+	function createKeylink(addKey) {
+		let ibBody = document.getElementById('infoBoxBody');
+		const kwordLink = document.createElement('a');
+		kwordLink.href = "#";
+		kwordLink.innerText = addKey;
+		kwordLink.setAttribute("style", "font-style:italic;");
+		kwordLink.onclick = function () {
+			topicBtn.innerHTML = addKey;
+			filterKey = addKey;
+			$("#infoBox").modal('hide');
+			
+			refreshMap();
+		};
+		ibBody.appendChild(kwordLink);
+	}
+	
+	
 	function onEachCountry(feature, layer) {
 		layer.on({
 			click: cntryClick
@@ -413,7 +449,7 @@
 		}
 		
 		if (filterKey !== 'all') {
-			if (feature.properties.keywords !== filterKey) return false;
+			if (feature.properties.keywords.indexOf(filterKey) == -1) return false;
 		}
 		
 		return true;
@@ -433,7 +469,7 @@
 			onEachFeature: onEachFeature
 		}).addTo(map);
 		map.flyTo([40, -10], 2.5)
-		
+		prevDate = '';
 	}
 	
 	
@@ -441,14 +477,15 @@
 		
 		onEachFeature: onEachFeature
 	}).addTo(map);
-
+	prevDate = '';
+	
 	function changeDay(date) {
 		var spltDate = date.split('-');
 		fltMonth = spltDate[1];
 		fltDay = spltDate[2];
 		selMonth.value = "1968-" + spltDate[1];
 		refreshMap();
-		<!-- Change Month to match -->
+	
 	}
 	
 	function changeMonth(date) {
