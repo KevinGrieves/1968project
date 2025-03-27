@@ -22,7 +22,7 @@
 </head>
 <body>
 
-
+<h1>Scrolly</h1>
 <div class="p-2 m-3 border" id="monthScrl" onWheel="scrolly(event);"> <!-- onTouchMove https://stackoverflow.com/questions/48941711/getting-onwheel-event-to-work-on-mobile -->
 	<h1>Dec</h1>
 	<h1  class="bg-info">All</h1>
@@ -42,9 +42,11 @@ function scrolly(event) {
 	if (event.deltaY > 0) {
 		mnthNum += 1
 	} else {
-		mnthNum = mnthNum - 1};
-		
-	
+		mnthNum -= 1};
+		chMnth(event);
+}
+
+function chMnth(event) {
 	mnthA = mnthArray[mnthNum - 1];
 	mnthB = mnthArray[mnthNum];
 	mnthC = mnthArray[mnthNum + 1];	
@@ -96,11 +98,11 @@ function moveTouch(e) {
 	var diffY = initialY - currentY;
  
 	if (diffY > 0) {
-    
-      alert("swiped up");
+		mnthNum += 1;
+		chMnth(e);
     } else {
-    
-      alert("swiped down");
+		mnthNum -= 1;
+		chMnth(e);
     }  
   
  
