@@ -16,19 +16,19 @@
 	<meta charset="UTF-8">
 
 <style>
-	
+	.noRefresh {overscroll-behavior-y: contain;}
 
 </style>
 </head>
 <body>
 
-<h1 class="m-2">Scrolly</h1>
-<div class="p-2 m-3 border" id="monthScrl" onWheel="scrolly(event);"> <!-- onTouchMove https://stackoverflow.com/questions/48941711/getting-onwheel-event-to-work-on-mobile -->
+<h1 class="m-4">Scrolly</h1>
+<div class="p-2 m-3 border noRefresh" id="monthScrl" onWheel="scrolly(event);"> <!-- onTouchMove https://stackoverflow.com/questions/48941711/getting-onwheel-event-to-work-on-mobile -->
 	<h1>Dec</h1>
-	<h1  class="bg-info">All</h1>
+	<h1 class="bg-info">All</h1>
 	<h1>Jan</h1>
 </div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 <script>
 
 const mnthSel = document.querySelector("#mnth");
@@ -73,6 +73,7 @@ function chMnth(event) {
 	};	
 	
 	document.getElementById("monthScrl").innerHTML = '<h1>' + mnthA + '</h1><h1 class="bg-info">' + mnthB + '</h1><h1>' + mnthC + '</h1>';
+	// Create DOM with onclicks for up down
 }
 
 monthScrl.addEventListener("touchstart", startTouch, false);
