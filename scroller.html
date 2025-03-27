@@ -16,13 +16,16 @@
 	<meta charset="UTF-8">
 
 <style>
-	.noRefresh {overscroll-behavior-y: contain;}
+	.noRefresh {
+		overflow-y:auto;
+		overscroll-behavior-y: contain;
+		}
 
 </style>
 </head>
 <body>
 
-<h1 class="m-4">Scrolly</h1>
+<h2 class="m-4">Scrolly</h1>
 <div class="p-2 m-3 border noRefresh" id="monthScrl" onWheel="scrolly(event);"> <!-- onTouchMove https://stackoverflow.com/questions/48941711/getting-onwheel-event-to-work-on-mobile -->
 	<h1>Dec</h1>
 	<h1 class="bg-info">All</h1>
