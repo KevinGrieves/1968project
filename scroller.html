@@ -24,7 +24,7 @@
 </head>
 <body>
 
-	<h1>Scrolly</h1>
+	<h1 class="m-2">Scrolly</h1>
 	
 	<div class="d-grid col-4 mx-auto p-0 ms-5 border w-50" id="monthScrl" onWheel="scrllM(event);">
 		<button class="btn btn-lg" onclick="mnthNum -= 1; chMnth(monthScrl);">Dec</button>
@@ -216,8 +216,8 @@ function chDay(event) {
 
 monthScrl.addEventListener("touchstart", strtMnthTch, false);
 monthScrl.addEventListener("touchmove", mnthTch, false);
-monthScrl.addEventListener("touchstart", strtDayTch, false);
-monthScrl.addEventListener("touchmove", dayTch, false);
+dayScrl.addEventListener("touchstart", strtDayTch, false);
+dayScrl.addEventListener("touchmove", dayTch, false);
  
 // Swipe Up / Down / Left / Right
 var initMY = null;
