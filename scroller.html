@@ -19,33 +19,51 @@
 	body, html {
 		overscroll-behavior-y: contain;
 		}
-
+	
 </style>
 </head>
 <body>
 
-<h2 class="m-4">Scrolly</h1>
-<div class="p-2 m-3 border noRefresh" id="monthScrl" onWheel="scrolly(event);"> <!-- onTouchMove https://stackoverflow.com/questions/48941711/getting-onwheel-event-to-work-on-mobile -->
-	<h1>Dec</h1>
-	<h1 class="bg-info">All</h1>
-	<h1>Jan</h1>
-</div>
+	<h1>Scrolly</h1>
+	
+	<div class="d-grid col-4 mx-auto p-0 ms-5 border w-50" id="monthScrl" onWheel="scrllM(event);">
+		<button class="btn btn-lg" onclick="mnthNum -= 1; chMnth(monthScrl);">Dec</button>
+		<button class="btn btn-lg bg-info">All</button>
+		<button class="btn btn-lg" onclick="mnthNum += 1; chMnth(monthScrl);">Jan</button>
+	</div>
+	<div class="col-4 mx-auto p-0 ms-5 border w-50 d-none" id="dayScrl" onWheel="scrllD(event);" >
+		<button class="btn btn-lg" onclick="dayNum -= 1; chDay(monthScrl);">31</button>
+		<button class="btn btn-lg bg-info">All</button>
+		<button class="btn btn-lg" onclick="dayNum += 1; chDay(monthScrl);">1</button>
+	</div>
+
+</body>
+
 
 <script>
 
 const mnthSel = document.querySelector("#mnth");
 
 var mnthNum = 0;
-var mnthArray = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+var dayNum = 0;
+var mnthArray = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
 
-function scrolly(event) {
+function scrllM(event) {
 	if (event.deltaY > 0) {
 		mnthNum += 1
 	} else {
 		mnthNum -= 1};
-		chMnth(event);
+	chMnth(event);
+}
+
+function scrllD(event) {
+	if (event.deltaY > 0) {
+		dayNum += 1
+	} else {
+		dayNum -= 1};
+	chDay(event);
 }
 
 function chMnth(event) {
@@ -59,46 +77,167 @@ function chMnth(event) {
 		mnthA = 'Dec';
 		mnthB = 'All';
 		mnthC = 'Jan';
+		
 	} else {
 		if (mnthNum == 12 || mnthNum < 0) {
 			mnthNum = 12
 			mnthA = 'Nov';
 			mnthB = 'Dec';
 			mnthC = 'All';
+		
 		} else {
 		if (mnthNum == 1) {
 			mnthA = 'All';
 			mnthB = 'Jan';
 			mnthC = 'Feb';
+		
 			};
 		};
 	};	
 	
-	document.getElementById("monthScrl").innerHTML = '<h1>' + mnthA + '</h1><h1 class="bg-info">' + mnthB + '</h1><h1>' + mnthC + '</h1>';
+	// document.getElementById("monthScrl").innerHTML = '<h1>' + mnthA + '</h1><h1 class="bg-info">' + mnthB + '</h1><h1>' + mnthC + '</h1>';
 	// Create DOM with onclicks for up down
+	document.getElementById("monthScrl").innerHTML = '';
+	
+	const monthDiv = document.getElementById('monthScrl');
+	addMnth = document.createElement('button');
+	addMnth.innerText = mnthA;
+	addMnth.classList.add("btn");
+	addMnth.classList.add("btn-lg");
+	addMnth.onclick = function () {
+		mnthNum -= 1;
+		chMnth(monthDiv);
+		};
+	monthDiv.appendChild(addMnth);
+	
+	
+	addMnth = document.createElement('button');
+	addMnth.innerText = mnthB;
+	addMnth.classList.add("btn");
+	addMnth.classList.add("bg-info");
+	addMnth.classList.add("btn-lg");
+	monthDiv.appendChild(addMnth);
+	
+	
+	addMnth = document.createElement('button');
+	addMnth.innerText = mnthC;
+	addMnth.classList.add("btn");
+	addMnth.classList.add("btn-lg");
+	addMnth.onclick = function () {
+		mnthNum += 1;
+		chMnth(monthDiv);
+		};
+	monthDiv.appendChild(addMnth);
+	
+	//Handle days 
+	if (mnthNum == 0) {
+		//document.getElementById("dayScrl").innerHTML = '<button class="btn btn-lg" onclick="";>Boop</button><button class="btn btn-lg bg-info">All</button><button class="btn btn-lg" onclick="">All</button>';
+		document.getElementById("dayScrl").classList.remove("d-grid");
+		document.getElementById("dayScrl").classList.add("d-none");
+		
+	} else {
+		daysInMonth = new Date(1968, mnthNum, 0).getDate();
+		if (dayNum > daysInMonth) {dayNum = daysInMonth};
+		document.getElementById("dayScrl").classList.add("d-grid");
+		document.getElementById("dayScrl").classList.remove("d-none");
+		chDay(event);
+	};
 }
 
-monthScrl.addEventListener("touchstart", startTouch, false);
-monthScrl.addEventListener("touchmove", moveTouch, false);
+
+function chDay(event) {
+	
+	
+	console.log(mnthArray[mnthNum] + ': ' + daysInMonth);
+	
+	dayA = dayNum - 1;
+	dayB = dayNum;
+	dayC = dayNum + 1;
+	 
+	if (dayNum > daysInMonth || dayNum == 0)  {
+		dayNum = 0
+		dayA = daysInMonth;
+		dayB = 'All';
+		dayC = 1;
+		
+	} else {
+	
+		if (dayNum == daysInMonth || dayNum < 0) {
+			dayNum = daysInMonth
+			dayA = daysInMonth - 1;
+			dayB = daysInMonth;
+			dayC = 'All';
+		
+		} else {
+		if (dayNum == 1) {
+			dayA = 'All';
+			dayB = 1;
+			dayC = 2;
+			};
+		};	
+	};
+	console.log(dayNum);
+	document.getElementById("dayScrl").innerHTML = '';
+	
+	const dayDiv = document.getElementById('dayScrl');
+	addDay = document.createElement('button');
+	addDay.innerText = dayA;
+	addDay.classList.add("btn");
+	addDay.classList.add("btn-lg");
+	addDay.onclick = function () {
+		dayNum -= 1;
+		chDay(dayDiv);
+		};
+	dayDiv.appendChild(addDay);
+	
+	
+	addDay = document.createElement('button');
+	addDay.innerText = dayB;
+	addDay.classList.add("btn");
+	addDay.classList.add("bg-info");
+	addDay.classList.add("btn-lg");
+	dayDiv.appendChild(addDay);
+	
+	
+	addDay = document.createElement('button');
+	addDay.innerText = dayC;
+	addDay.classList.add("btn");
+	addDay.classList.add("btn-lg");
+	addDay.onclick = function () {
+		dayNum += 1;
+		chDay(dayDiv);
+		};
+	dayDiv.appendChild(addDay);
+	
+}
+
+
+
+
+monthScrl.addEventListener("touchstart", strtMnthTch, false);
+monthScrl.addEventListener("touchmove", mnthTch, false);
+monthScrl.addEventListener("touchstart", strtDayTch, false);
+monthScrl.addEventListener("touchmove", dayTch, false);
  
 // Swipe Up / Down / Left / Right
-var initialY = null;
- 
-function startTouch(e) {
+var initMY = null;
 
-  initialY = e.touches[0].clientY;
-};
  
-function moveTouch(e) {
+function strtMnthTch(e) {
+
+  initMY = e.touches[0].clientY;
+}
+ 
+function mnthTch(e) {
   
  
-	if (initialY === null) {
+	if (initMY === null) {
 		return;
 	}
  
   
-	var currentY = e.touches[0].clientY;
-	var diffY = initialY - currentY;
+	var currMY = e.touches[0].clientY;
+	var diffY = initMY - currMY;
  
 	if (diffY > 0) {
 		mnthNum += 1;
@@ -107,20 +246,43 @@ function moveTouch(e) {
 		mnthNum -= 1;
 		chMnth(e);
     }  
-  
- 
-  
-  initialY = null;
+    
+  initMY = null;
    
   e.preventDefault();
-};
+}
 
 
+function strtDayTch(e) {
 
-
-
+  initDY = e.touches[0].clientY;
+}
+ 
+function dayTch(e) {
+  
+ 
+	if (initDY === null) {
+		return;
+	}
+ 
+  
+	var currDY = e.touches[0].clientY;
+	var diffY = initDY - currDY;
+ 
+	if (diffY > 0) {
+		dayNum += 1;
+		chDay(e);
+    } else {
+		dayNum -= 1;
+		chDay(e);
+    }  
+    
+  initDY = null;
+   
+  e.preventDefault();
+}
 
 
 </script>
-</body>
+
 </html>
