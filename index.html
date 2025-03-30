@@ -20,6 +20,10 @@
         width: 100%;
     }
     
+    body, html {
+		overscroll-behavior-y: contain;
+	}
+    
     a {
 		text-decoration:none;
 	}
@@ -104,7 +108,7 @@
 	</div>
 
 	<!-- Modal -->
-	<div class="infoBox modal fade h-75" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="infoBox modal fade" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
 		  <div class="modal-header" id="infoBoxHead">
@@ -142,7 +146,7 @@
             
         </nav>
         <div class="container-fluid d-flex m-0 p-0">
-			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-md offcanvas-start">
+			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-md offcanvas-start opacity-75">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-label="Close"></button>
                 </div>
@@ -151,7 +155,21 @@
 						<img src="./images/1968logo.png" width="300" class="img-fluid">  
 					</div>
 					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .8;">
-						<div class="form-check">
+						<div class="row justify-content-left p-2">
+							<div class="d-grid col-sm-6 mx-auto p-0 border border-primary ms-0 w-50" id="monthScrl" onWheel="scrllM(event);">
+								<button class="btn btn-lg" onclick="mnthNum -= 1; chMnth(monthScrl);">Dec</button>
+								<button class="btn btn-lg bg-info">All</button>
+								<button class="btn btn-lg" onclick="mnthNum += 1; chMnth(monthScrl);">Jan</button>
+							</div>
+							<div class="d-none col-sm-5 mx-auto p-0 border border-primary w-50" id="dayScrl" onWheel="scrllD(event);" >
+								<button class="btn btn-lg" onclick="dayNum -= 1; chDay(monthScrl);">31</button>
+								<button class="btn btn-lg bg-info">All</button>
+								<button class="btn btn-lg" onclick="dayNum += 1; chDay(monthScrl);">1</button>
+							</div>
+						</div>
+						
+						
+				<!--		<div class="form-check">
 							<label class="form-check-label" for="chkDate">Filter by date</label>
 							<input type="checkbox" class="form-check-input" id="chkDate" name="dateFltr" onchange='dateChk(this);'>
 							
@@ -159,7 +177,7 @@
 						
 						<div id="datePicker" class="collapse">
 						
-							<ul class="nav nav-pills"  role="tablist">
+							<ul class="nav nav-pills nav-justified" role="tablist">
 								<li>
 									<a class="nav-link active" data-bs-toggle="tab" href="#monthTab" onclick="clickMonth()">Month</a>
 								</li>
@@ -179,12 +197,9 @@
 								</div>
 							</div>
 
-						</div>
+						</div>   -->
 						
 						
-						
-						
-						<br>
 						
 						
 						<div class="dropdown mt-2">
@@ -231,6 +246,11 @@
 		
 	});
 	
+	const mnthSel = document.querySelector("#mnth");
+
+	var mnthNum = 0;
+	var dayNum = 0;
+	var mnthArray = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	
 	var filterKey = 'all';	
 	var fltDay = 0;
@@ -295,7 +315,8 @@
   		
   		
   		
-  		
+  		var coOrds = clickedMarker.getLatLng();
+				map.flyTo([coOrds.lat, coOrds.lng], 5);
   		$("#infoBox").modal('show');
 		
 		
@@ -380,7 +401,7 @@
 				
 				
 				var coOrds = layer.getLatLng();
-				map.flyTo([(coOrds.lat + 10), coOrds.lng], 5);
+				map.flyTo([coOrds.lat, coOrds.lng], 5);
 				$("#infoBox").modal('show');
 				
 			};
@@ -435,22 +456,24 @@
 	
 	function applyFilter(feature) {
 		
-		if (chkDate.checked === true) {
+		
 			if (fltDay > 0) {
-				if (feature.properties.day !== fltDay) {
+				if (feature.properties.day != fltDay) {
 					return false;
 				}
-			}
+			};
 			if (fltMonth > 0) {
-				if (feature.properties.month !== fltMonth) {
+				if (feature.properties.month != fltMonth) {
+					
 					return false;
+					
 				}
-			}
-		}
+			};
+		
 		
 		if (filterKey !== 'all') {
 			if (feature.properties.keywords.indexOf(filterKey) == -1) return false;
-		}
+		};
 		
 		return true;
 			
@@ -479,45 +502,18 @@
 	}).addTo(map);
 	prevDate = '';
 	
-	function changeDay(date) {
-		var spltDate = date.split('-');
-		fltMonth = spltDate[1];
-		fltDay = spltDate[2];
-		selMonth.value = "1968-" + spltDate[1];
-		refreshMap();
-	
-	}
-	
-	function changeMonth(date) {
-		var spltDate = date.split('-');
-		fltMonth = spltDate[1];
-		fltDay = 0;
-		refreshMap();
-	}
-	
-	function clickMonth() {
-		fltDay = 0;
-		refreshMap();
-	}
-	
-	function clickDay() {
-		var spltDate = selDate.value.split('-');
-		fltDay = spltDate[2];
+	function changeDate(newMnth, newDay) {
+		
+		fltMonth = newMnth;
+		fltDay = newDay;
 		
 		refreshMap();
-
+	
 	}
 	
-	function dateChk(checkbox) {
-		if(checkbox.checked == true){
-			document.getElementById('datePicker').classList.remove('collapse');
-		}else{
-			document.getElementById('datePicker').classList.add('collapse');
-			<!-- Reset dates ? -->
-	   };
-	   refreshMap();
-	   
-	}
+	
+	
+	
 
 	function changeKeyword(keyword) {
 		filterKey = keyword;
@@ -526,6 +522,240 @@
 		} else  topicBtn.innerHTML = keyword;
 		refreshMap();
 		
+	}
+	
+	function scrllM(event) {
+		if (event.deltaY > 0) {
+			mnthNum += 1
+		} else {
+			mnthNum -= 1};
+		chMnth(event);
+	}
+
+	function scrllD(event) {
+		if (event.deltaY > 0) {
+			dayNum += 1
+		} else {
+			dayNum -= 1};
+		chDay(event);
+	}
+
+	function chMnth(event) {
+		mnthA = mnthArray[mnthNum - 1];
+		mnthB = mnthArray[mnthNum];
+		mnthC = mnthArray[mnthNum + 1];	
+		
+		
+		if (mnthNum > 12  || mnthNum == 0)  {
+			mnthNum = 0;
+			dayNum = 0;
+			mnthA = 'Dec';
+			mnthB = 'All';
+			mnthC = 'Jan';
+			
+		} else {
+			if (mnthNum == 12 || mnthNum < 0) {
+				mnthNum = 12;
+				mnthA = 'Nov';
+				mnthB = 'Dec';
+				mnthC = 'All';
+			
+			} else {
+			if (mnthNum == 1) {
+				mnthA = 'All';
+				mnthB = 'Jan';
+				mnthC = 'Feb';
+			
+				};
+			};
+		};	
+		
+		// document.getElementById("monthScrl").innerHTML = '<h1>' + mnthA + '</h1><h1 class="bg-info">' + mnthB + '</h1><h1>' + mnthC + '</h1>';
+		// Create DOM with onclicks for up down
+		document.getElementById("monthScrl").innerHTML = '';
+		
+		const monthDiv = document.getElementById('monthScrl');
+		addMnth = document.createElement('button');
+		addMnth.innerText = mnthA;
+		addMnth.classList.add("btn");
+		addMnth.classList.add("btn-lg");
+		addMnth.onclick = function () {
+			mnthNum -= 1;
+			chMnth(monthDiv);
+			};
+		monthDiv.appendChild(addMnth);
+		
+		
+		addMnth = document.createElement('button');
+		addMnth.innerText = mnthB;
+		addMnth.classList.add("btn");
+		addMnth.classList.add("bg-info");
+		addMnth.classList.add("btn-lg");
+		monthDiv.appendChild(addMnth);
+		
+		
+		addMnth = document.createElement('button');
+		addMnth.innerText = mnthC;
+		addMnth.classList.add("btn");
+		addMnth.classList.add("btn-lg");
+		addMnth.onclick = function () {
+			mnthNum += 1;
+			chMnth(monthDiv);
+			};
+		monthDiv.appendChild(addMnth);
+		
+		//Handle days 
+		if (mnthNum == 0) {
+			//document.getElementById("dayScrl").innerHTML = '<button class="btn btn-lg" onclick="";>Boop</button><button class="btn btn-lg bg-info">All</button><button class="btn btn-lg" onclick="">All</button>';
+			document.getElementById("dayScrl").classList.remove("d-grid");
+			document.getElementById("dayScrl").classList.add("d-none");
+			
+		} else {
+			daysInMonth = new Date(1968, mnthNum, 0).getDate();
+			if (dayNum > daysInMonth) {dayNum = daysInMonth};
+			document.getElementById("dayScrl").classList.add("d-grid");
+			document.getElementById("dayScrl").classList.remove("d-none");
+			chDay(event);
+		};
+		changeDate(mnthNum, dayNum);
+	}
+
+
+	function chDay(event) {
+		
+		
+		// console.log(mnthArray[mnthNum] + ': ' + daysInMonth);
+		
+		dayA = dayNum - 1;
+		dayB = dayNum;
+		dayC = dayNum + 1;
+		 
+		if (dayNum > daysInMonth || dayNum == 0)  {
+			dayNum = 0
+			dayA = daysInMonth;
+			dayB = 'All';
+			dayC = 1;
+			
+		} else {
+		
+			if (dayNum == daysInMonth || dayNum < 0) {
+				dayNum = daysInMonth
+				dayA = daysInMonth - 1;
+				dayB = daysInMonth;
+				dayC = 'All';
+			
+			} else {
+			if (dayNum == 1) {
+				dayA = 'All';
+				dayB = 1;
+				dayC = 2;
+				};
+			};	
+		};
+		// console.log(dayNum);
+		document.getElementById("dayScrl").innerHTML = '';
+		
+		const dayDiv = document.getElementById('dayScrl');
+		addDay = document.createElement('button');
+		addDay.innerText = dayA;
+		addDay.classList.add("btn");
+		addDay.classList.add("btn-lg");
+		addDay.onclick = function () {
+			dayNum -= 1;
+			chDay(dayDiv);
+			};
+		dayDiv.appendChild(addDay);
+		
+		
+		addDay = document.createElement('button');
+		addDay.innerText = dayB;
+		addDay.classList.add("btn");
+		addDay.classList.add("bg-info");
+		addDay.classList.add("btn-lg");
+		dayDiv.appendChild(addDay);
+		
+		
+		addDay = document.createElement('button');
+		addDay.innerText = dayC;
+		addDay.classList.add("btn");
+		addDay.classList.add("btn-lg");
+		addDay.onclick = function () {
+			dayNum += 1;
+			chDay(dayDiv);
+			};
+		dayDiv.appendChild(addDay);
+		changeDate(mnthNum, dayNum);
+	}
+
+
+
+
+	monthScrl.addEventListener("touchstart", strtMnthTch, false);
+	monthScrl.addEventListener("touchmove", mnthTch, false);
+	dayScrl.addEventListener("touchstart", strtDayTch, false);
+	dayScrl.addEventListener("touchmove", dayTch, false);
+	 
+	// Swipe Up / Down / Left / Right
+	var initMY = null;
+
+	 
+	function strtMnthTch(e) {
+
+	  initMY = e.touches[0].clientY;
+	}
+	 
+	function mnthTch(e) {
+	  
+	 
+		if (initMY === null) {
+			return;
+		}
+	 
+	  
+		var currMY = e.touches[0].clientY;
+		var diffY = initMY - currMY;
+	 
+		if (diffY > 0) {
+			mnthNum += 1;
+			chMnth(e);
+		} else {
+			mnthNum -= 1;
+			chMnth(e);
+		}  
+		
+	  initMY = null;
+	   
+	  e.preventDefault();
+	}
+
+
+	function strtDayTch(e) {
+
+	  initDY = e.touches[0].clientY;
+	}
+	 
+	function dayTch(e) {
+	  
+	 
+		if (initDY === null) {
+			return;
+		}
+	 
+	  
+		var currDY = e.touches[0].clientY;
+		var diffY = initDY - currDY;
+	 
+		if (diffY > 0) {
+			dayNum += 1;
+			chDay(e);
+		} else {
+			dayNum -= 1;
+			chDay(e);
+		}  
+		
+	  initDY = null;
+	   
+	  e.preventDefault();
 	}
 
 </script>
