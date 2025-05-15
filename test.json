@@ -116,8 +116,25 @@ var testdb =
 				"type": "Point",
 				"coordinates": [-122.0577, 37.3964]
 			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Rodney Riots",
+				"day": "16",
+				"month": "10",
+				"datetxt": "16th October",
+				"location": "Kingston, Jamaica",
+				"description": "<br>On 16th October 1968, the students of the University of West Indies (UWI) in Jamaica became the latest to join in with the worldwide student protests of that year. The spark that lit the flame, in this case, was the Jamaican government's decision to bar Dr Walter Rodney from returning to the country to continue his job as a lecturer at the university. Rodney, an influential Guyanese left-wing historian of Africa and vocal participant in the Black Power movement, had been attending a conference in Montreal, Canada, when he returned to Jamaica the authorities would not let him disembark from the plane as he had been identified as a prohibited immigrant because of his visits to the USSR and Cuba.<br><br>When the students of UWI heard of Rodney's plight they caused such disruption on the campus that the university was forced to close. They then took their demonstrations onto the streets, marching first to Prime Minister Hugh Shearer's residence and then on to the parliament in Kingston. As the students marched other demonstrators joined in and the protests became increasingly violent and spread throughout the city leaving several dead and millions of dollars worth of damage to property.<br><br>Rodney's political activities continued. Having returned to his native Guyana, he joined the democratic socialist Working People’s Alliance (WPA). In 1979, he and four other WPA members were charged with arson following the destruction of the headquarters of the ruling People's National Congress. While released on bail Rodney was assassinated when a bomb exploded in his car in June 1980.",
+				"keywords": "Protest",
+				"image": "",
+				"alt": "",
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-76.74844, 18.00466]
+			}
 		}
-		
 		
 	]
 }

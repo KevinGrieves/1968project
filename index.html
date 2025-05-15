@@ -109,21 +109,21 @@
 
 	<!-- Modal -->
 	<div class="infoBox modal fade" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-		<div class="modal-content">
-		  <div class="modal-header" id="infoBoxHead">
-			<h1 class="modal-title fs-5">Modal title</h1>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		  </div>
-		  <div class="modal-body" id="infoBoxBody">
-			<h2>Modal</h2>
-		  </div>
-		  <div class="modal-footer" id="infoBoxFoot">
-			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header" id="infoBoxHead">
+					<h1 class="modal-title fs-5">Modal title</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="infoBoxBody">
+					<h2>Modal</h2>
+				</div>
+				<div class="modal-footer" id="infoBoxFoot">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			
-		  </div>
+				</div>
+			</div>
 		</div>
-	  </div>
 	</div>
 
 	
@@ -146,15 +146,15 @@
             
         </nav>
         <div class="container-fluid d-flex m-0 p-0">
-			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-md offcanvas-start opacity-75">
+			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-sm offcanvas-start opacity-75">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-label="Close"></button>
                 </div>
                 <div class="flex-column h-100">
-					<div class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .8; width:200px;">
+					<div class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .9; width:200px;">
 						<img src="./images/1968logo.png" width="300" class="img-fluid">  
 					</div>
-					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .8;">
+					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .9;">
 						<div class="row justify-content-left p-2">
 							<div class="d-grid col-sm-6 mx-auto p-0 border border-primary ms-0 w-50" id="monthScrl" onWheel="scrllM(event);">
 								<button class="btn btn-lg" onclick="mnthNum -= 1; chMnth(monthScrl);">Dec</button>
@@ -169,36 +169,7 @@
 						</div>
 						
 						
-				<!--		<div class="form-check">
-							<label class="form-check-label" for="chkDate">Filter by date</label>
-							<input type="checkbox" class="form-check-input" id="chkDate" name="dateFltr" onchange='dateChk(this);'>
-							
-						</div>
-						
-						<div id="datePicker" class="collapse">
-						
-							<ul class="nav nav-pills nav-justified" role="tablist">
-								<li>
-									<a class="nav-link active" data-bs-toggle="tab" href="#monthTab" onclick="clickMonth()">Month</a>
-								</li>
-								
-								<li class="nav-item">
-									<a class="nav-link" data-bs-toggle="tab" href="#dayTab" onclick="clickDay()">Day</a>
-								</li>
-								
-							</ul>
-						
-							<div class="tab-content mt-1">
-								<div id="monthTab" class="container tab-pane active p-0">
-									<input class="form-control" id="selMonth" type="month" value="0" min="1968-01" max="1968-12" onchange="changeMonth(value);">
-								</div>
-								<div id="dayTab" class="container tab-pane fade p-0">
-									<input class="form-control" id="selDate" type="date" value="0" min="1968-01-01" max="1968-12-31" onchange="changeDay(value);">
-								</div>
-							</div>
-
-						</div>   -->
-						
+				
 						
 						
 						
@@ -212,13 +183,14 @@
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Disaster');">Disaster</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Nuclear weapons');">Nuclear weapons</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Prague Spring');">Prague Spring</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Protest');">Protest</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Technology');">Technology</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Vietnam War');">Vietnam War</a></li>
 								
 							</ul>
 						</div>
 					</div>
-					<div id="eventList" class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .8; height: calc(100vh - 400px);">
+					<div id="eventList" class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .9; height: calc(100vh - 400px);">
 						<p><b>Events</b></p>
 					</div>
 				</div>
@@ -267,7 +239,8 @@
 		zoomControl: false
 	});
 	
-
+	var offcanvasElement = document.getElementById("leftnav");
+	var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
 
 	L.control.zoom({
 		position: 'bottomright'
@@ -429,6 +402,8 @@
 			filterKey = addKey;
 			$("#infoBox").modal('hide');
 			
+			if (screen.width <= 540) {
+				offcanvas.toggle()};
 			refreshMap();
 		};
 		ibBody.appendChild(kwordLink);
