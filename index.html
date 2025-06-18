@@ -180,13 +180,15 @@
 							<ul class="dropdown-menu">
 								
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('all');">All</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Coup d'état');">Coup d'état</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Disaster');">Disaster</a></li>
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Election');">Election</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Nuclear weapons');">Nuclear weapons</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Prague Spring');">Prague Spring</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Protest');">Protest</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Technology');">Technology</a></li>
 								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Vietnam War');">Vietnam War</a></li>
-								
+								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Warfare');">Warfare</a></li>
 							</ul>
 						</div>
 					</div>
@@ -203,7 +205,7 @@
 	
 
 </body>
-<script src="test.json" type="text/javascript"></script>
+<script src="events.json" type="text/javascript"></script>
 <script src="CShapes-2.0.geojson" type="text/javascript"></script>
 
 
@@ -241,6 +243,48 @@
 	
 	var offcanvasElement = document.getElementById("leftnav");
 	var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+	
+	var nukeIcon = new L.Icon({
+		iconUrl: './icons/fluent-emoji-high-contrast--radioactive.png',
+		iconSize:     [24, 24],
+		iconAnchor:   [12, 12]
+	});
+	
+	var voteIcon = new L.Icon({
+		iconUrl: './icons/fluent-emoji-high-contrast--cross-mark-button.png',
+		iconSize:     [24, 24],
+		iconAnchor:   [12, 12]
+	});
+
+	var techIcon = new L.Icon({
+		iconUrl: './icons/fluent-emoji-high-contrast--light-bulb.png',
+		iconSize:     [24, 24],
+		iconAnchor:   [12, 12]
+	});
+	
+	var fistIcon = new L.Icon({
+		iconUrl: './icons/fluent-emoji-high-contrast--raised-fist.png',
+		iconSize:     [24, 24],
+		iconAnchor:   [12, 12]
+	});
+	
+	var warIcon = new L.Icon({
+		iconUrl: './icons/fluent-emoji-high-contrast--crossed-swords.png',
+		iconSize:     [24, 24],
+		iconAnchor:   [12, 12]
+	});
+	
+	var fireIcon = new L.Icon({
+		iconUrl: './icons/fluent-emoji-high-contrast--fire.png',
+		iconSize:     [24, 24],
+		iconAnchor:   [12, 12]
+	});
+
+	var coupIcon = new L.Icon({
+		iconUrl: './icons/fluent-emoji-high-contrast--military-helmet.png',
+		iconSize:     [24, 24],
+		iconAnchor:   [12, 12]
+	});
 
 	L.control.zoom({
 		position: 'bottomright'
@@ -289,7 +333,7 @@
   		
   		
   		var coOrds = clickedMarker.getLatLng();
-				map.flyTo([coOrds.lat, coOrds.lng], 5);
+		map.flyTo([coOrds.lat, coOrds.lng], 5);
   		$("#infoBox").modal('show');
 		
 		
@@ -317,6 +361,7 @@
 	function onEachFeature(feature, layer) {
 		
 		
+		
 		const eventLst = document.getElementById('eventList');
 		
 		const newDate = document.createElement('p');
@@ -328,8 +373,37 @@
 		prevDate = feature.properties.datetxt;
 		
 		
-		
-		
+		if (feature.properties.keywords.indexOf(', ') == -1) {
+				iconKey = feature.properties.keywords
+				
+			} else {
+				var spltKeys = feature.properties.keywords.split(', ');
+				iconKey = spltKeys[0]
+				};
+					
+		switch(iconKey) {
+			case "Nuclear weapons":
+				layer.setIcon(nukeIcon);						
+				break;
+			case "Warfare":
+				layer.setIcon(warIcon);						
+				break;
+			case "Disaster":
+				layer.setIcon(fireIcon);						
+				break;
+			case "Protest":
+				layer.setIcon(fistIcon);						
+				break;
+			case "Technology":
+				layer.setIcon(techIcon);						
+				break;
+			case "Election":
+				layer.setIcon(voteIcon);						
+				break;
+			case "Coup d'état":
+				layer.setIcon(coupIcon);						
+				break;
+		};
 		
 		
 		const newEvent = document.createElement('a');
@@ -340,36 +414,37 @@
 		newEvent.setAttribute("data-bs-target", "#leftnav");
 		
 		newEvent.onclick = function () {
-				eventTitle = feature.properties.title;
-				eventLoc = feature.properties.location;
-				eventBlurb = feature.properties.description;
-				eventDate = feature.properties.datetxt;
-				eventKeys = feature.properties.keywords;
-				eventImg = feature.properties.image;
-				eventAlt = feature.properties.alt;
+			eventTitle = feature.properties.title;
+			eventLoc = feature.properties.location;
+			eventBlurb = feature.properties.description;
+			eventDate = feature.properties.datetxt;
+			eventKeys = feature.properties.keywords;
+			eventImg = feature.properties.image;
+			eventAlt = feature.properties.alt;
 				
-				if (feature.properties.attr == null) {
-					eventAttr = ""
-				} else {
-					eventAttr = '<span style="font-size:50%;">' + feature.properties.attr + '</span>'
-				};
-				let ibHead = document.getElementById('infoBoxHead');
-				ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
-				let ibBody = document.getElementById('infoBoxBody');
-				ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right; margin-left:8px;"><img src="./images/' + eventImg + '" class="img-fluid" alt="' + eventAlt + '" title="' + eventAlt + '" >' + eventAttr + '</div><p>' + eventBlurb + '</p>';
-				
-				
-				//Multi Keyword
-				if (eventKeys.indexOf(', ') == -1) {
-					createKeylink(eventKeys)
-				} else {
-				var spltKeys = eventKeys.split(', ');
-				createKeylink(spltKeys[0]);
-				const breakKeys = document.createElement('br');
-				ibBody.appendChild(breakKeys);
-				createKeylink(spltKeys[1]);
+			if (feature.properties.attr == null) {
+				eventAttr = ""
+			} else {
+				eventAttr = '<span style="font-size:50%;">' + feature.properties.attr + '</span>'
+			};
+			let ibHead = document.getElementById('infoBoxHead');
+			ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
+			let ibBody = document.getElementById('infoBoxBody');
+			ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right; margin-left:8px;"><img src="./images/' + eventImg + '" class="img-fluid" alt="' + eventAlt + '" title="' + eventAlt + '" >' + eventAttr + '</div><p>' + eventBlurb + '</p>';
 			
-				};
+				
+			//Multi Keyword
+			if (eventKeys.indexOf(', ') == -1) {
+				createKeylink(eventKeys)
+			} else {
+			var spltKeys = eventKeys.split(', ');
+			createKeylink(spltKeys[0]);
+			const breakKeys = document.createElement('br');
+			ibBody.appendChild(breakKeys);
+			createKeylink(spltKeys[1]);
+			
+			
+			};
 				
 				
 				
@@ -379,8 +454,10 @@
 				
 			};
 		
+		
 		eventLst.appendChild(newDate);
 		eventLst.appendChild(newEvent);
+		
 		
 
 		
@@ -417,6 +494,8 @@
 		
 	}
 
+
+	//Hide country layer when zoomed in
 	var cntryLayer = new L.geoJSON(countries68, {
 		onEachFeature: onEachCountry
 	}).addTo(map);
@@ -427,7 +506,14 @@
 		opacity: 0.3
 	});
 	
-	
+	map.on('zoomend', function (e) {
+		
+		if (e.target._zoom >= 10) {
+			map.removeLayer(cntryLayer);
+		} else {
+			map.addLayer(cntryLayer);
+		};
+	});
 	
 	function applyFilter(feature) {
 		
@@ -464,7 +550,8 @@
 		markerLayer.clearLayers();
 		markerLayer = L.geoJSON(testdb, {
 			filter: applyFilter,
-			onEachFeature: onEachFeature
+			onEachFeature: onEachFeature,
+			
 		}).addTo(map);
 		map.flyTo([40, -10], 2.5)
 		prevDate = '';

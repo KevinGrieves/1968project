@@ -1,0 +1,196 @@
+var testdb = 
+{
+	"type": "FeatureCollection",
+		"features": [
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Alexander Dubček elected",
+				"day": "05",
+				"month": "01",
+				"datetxt": "5th January",
+				"location": "Spanish Hall (Španělský sál), Prague, Czechoslovakia",
+				"description": "Alexander Dubček was elected First Secretary of the Communist Party of Czechoslovakia (KSČ)",
+				"keywords": "Election, Prague Spring",
+				"image": "Dubcek.jpg",
+				"alt": "Portrait of Alexander Dubček"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [14.398496869087628, 50.09093080430242]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Nuclear bomber crashes in Greenland",
+				"day": "21",
+				"month": "01",
+				"datetxt": "21st January",
+				"location": "North East Greenland",
+				"description": "A United States Air Force Boeing B-52G-100-BW Stratofortress, serial number 58-0188,carrying four B28FI nuclear bombs, crashed near Thule Air Base. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Nuclear weapons, Disaster",
+				"image": "B-52G.jpg",
+				"alt": "B-52G, similar to the one that crashed"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-69.281944, 76.527778]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Start of the Battle of Khe Sanh",
+				"day": "21",
+				"month": "01",
+				"datetxt": "21st January",
+				"location": "Khe Sanh Combat Base, Quảng Trị Province, Republic of Vietnam",
+				"description": "Until 9th July. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Warfare, Vietnam War",
+				"image": "KheSanh.jpg",
+				"alt": "US Marine Corps sniper team searches for targets"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [106.72423, 16.65420]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "First Royal Navy submarine test firing of Polaris missile",
+				"day": "15",
+				"month": "02",
+				"datetxt": "15th February",
+				"location": "Eastern Test Range, Atlantic Ocean",
+				"description": "The Royal Navy makes the first test firing of a Polaris nuclear ballistic missile, from the submarine HMS Resolution. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Nuclear weapons",
+				"image": "PolarisUK.jpg",
+				"alt": "British Polaris Missile at the Imperial War Museum in London",
+				"attr": "<a href='https://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>CC BY-SA 4.0</a> Emőke Dénes, British Polaris Missile at the Imperial War Museum in London, England. <a href='https://commons.wikimedia.org/wiki/File:British_Polaris_Missile_-_Imperial_War_Museum_1.jpg' target='_blank'>Source</a>"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-79, 28.5]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Wahine ferry disaster",
+				"day": "10",
+				"month": "04",
+				"datetxt": "10th April",
+				"location": "Wellington Harbour, New Zealand",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Disaster",
+				"image": "Wahine.jpg",
+				"alt": "TEV Wahine in port",				
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [174.835, -41.3525]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Collapse of Ronan Point",
+				"day": "16",
+				"month": "05",
+				"datetxt": "16th May",
+				"location": "Newham, East London",
+				"description": "At around 5:45 in the morning of Thursday 16th May 1968, in flat 90 of the newly completed Ronan Point high-rise housing block in Newham, East London, a 56 year old woman called Ivy Hodge struck a match to light the gas stove for her early morning cup of tea. The flame ignited the gas that had collected in the room from a leaky connection to the cooker. The explosion blew out a load-bearing wall causing the complete collapse of one corner of the building as the four flats above Ivy's came crashing down.<br><br>Ivy survived the collapse by being blown clear by the explosion; however, four people died and another seventeen received injuries. The death toll would certainly have been higher if all the flats in the newly opened building had been occupied. The building was repaired and strengthened to avoid a repeat of the tragedy, which prompted the Government to tighten up building regulations.",
+				"keywords": "Disaster",
+				"image": "RonanPoint.jpg",
+				"alt": "Image of the partial collpase of Ronan Point",
+				"attr": "<a href='https://creativecommons.org/licenses/by-sa/2.0/' target='_blank'>CC BY-SA 2.0</a> Derek Voller, Ronan Point collapse, Canning Town. <a href='https://en.wikipedia.org/wiki/File:Ronan_Point_collapse_closeup.jpg' target='_blank'>Source</a>"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.0215, 51.5129]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Sexta-feira sangrenta",
+				"day": "21",
+				"month": "06",
+				"datetxt": "21st June",
+				"location": "Avenida Rio Branco, Rio de Janeiro, Brazil",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Protest",
+				"image": "BloodyFriday.png",
+				"alt": "Image of student protest against the Brazilian military dictatorship"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-43.179597, -22.899872]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Founding of Intel",
+				"day": "18",
+				"month": "07",
+				"datetxt": "18th July",
+				"location": "Mountain View, California",
+				"description": "In the late '60s, the chemist and physicist, Dr. Gordon E. Moore, and the co-inventor of the integrated circuit, Robert N. Noyce departed Fairchild Semiconductor to set up their own company. Initially named NM Electronics they soon renamed it to Integrated Electronics Corporation, or Intel for short. <br><br>With money raised by the venture capitalist Arthur Rock, who became Intel's first chairman, Moore and Noyce founded their new company on 18th July 1968, based in Santa Clara, California, which was at the centre of the area soon to be known as Silicon Valley.<br><br>In 1971, the company released the Intel 4004, the first commercially available microprocessor. When the personal computing boom started, Intel were well placed to make the most of it, inventing the x86 line of computer processors, which IBM used in their PCs.",
+				"keywords": "Technology",
+				"image": "Intel.png",
+				"alt": "First Intel logo",
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-122.0577, 37.3964]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Peruvian coup d'état",
+				"day": "3",
+				"month": "10",
+				"datetxt": "3rd October",
+				"location": "Palacio de Gobierno, Lima, Peru",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Coup d'état",
+				"image": "PeruCoup.jpg",
+				"alt": "Military vehicles in front of the Palacio de Gobierno",
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-77.02996, -12.044798]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Rodney Riots",
+				"day": "16",
+				"month": "10",
+				"datetxt": "16th October",
+				"location": "Kingston, Jamaica",
+				"description": "On 16th October 1968, the students of the University of West Indies (UWI) in Jamaica became the latest to join in with the worldwide student protests of that year. The spark that lit the flame, in this case, was the Jamaican government's decision to bar Dr Walter Rodney from returning to the country to continue his job as a lecturer at the university. Rodney, an influential Guyanese left-wing historian of Africa and vocal participant in the Black Power movement, had been attending a conference in Montreal, Canada, when he returned to Jamaica the authorities would not let him disembark from the plane as he had been identified as a prohibited immigrant because of his visits to the USSR and Cuba.<br><br>When the students of UWI heard of Rodney's plight they caused such disruption on the campus that the university was forced to close. They then took their demonstrations onto the streets, marching first to Prime Minister Hugh Shearer's residence and then on to the parliament in Kingston. As the students marched other demonstrators joined in and the protests became increasingly violent and spread throughout the city leaving several dead and millions of dollars worth of damage to property.<br><br>Rodney's political activities continued. Having returned to his native Guyana, he joined the democratic socialist Working People’s Alliance (WPA). In 1979, he and four other WPA members were charged with arson following the destruction of the headquarters of the ruling People's National Congress. While released on bail Rodney was assassinated when a bomb exploded in his car in June 1980.",
+				"keywords": "Protest",
+				"image": "",
+				"alt": "",
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-76.74844, 18.00466]
+			}
+		}
+		
+	]
+}
