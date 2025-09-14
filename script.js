@@ -93,8 +93,8 @@ L.control.zoom({
 }).addTo(map);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	noWrap: true
-	
+	noWrap: true,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 function markerClick(e) {
