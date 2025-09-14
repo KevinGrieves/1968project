@@ -2,88 +2,97 @@
 <html lang="en">
 <head>
 	<title>1968 Project</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="The 1968 Project is an interactive map of the key events of this tumultuous year">
+	
+	
 	<!--Bootstrap-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 	<!--Leaflet-->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script> 
-	
+	<!--JQuery-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
 	
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="The 1968 Project is an interactive map of the key events of this tumultuous year">
-	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+	
+	
 <style>
-	html, body, #map {
-        height: 100%;
-        width: 100%;
-    }
-    
-    body, html {
-		overscroll-behavior-y: contain;
-	}
-    
-    a {
-		text-decoration:none;
-	}
-	
-	a:hover {
-		font-style:bold;
-		color:#000;
-    }
-    
-    #map {
-		background-color: #AAD3DF;
-	}
-	
-	.mainmap {
-		z-index:0;
-	}
-	
-	.sidebar {
-		top:0;
-		position:absolute;
-		z-index:100;
-		width:0px;
-		
-	}
-	
-	.infoBox {
-		z-index:200;
+/*variables*/
+:root {
+  
+  --main: #eaedf0;
+  --accent: #3B71CA;
+  --accent-2: #54B4D3;
+}
 
-	}
-	
-	.modal-backdrop {
-		z-index: 150;
-	}
-	
-	.modal-article {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 15px;
-		
-	}
-           
-	
-	.loading-screen {
-		background-color: #000020;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1000;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		opacity: 80%;
-		transition: all 0.2s; 
-	}
+/*styles*/
 
 
-	
+
+.header-display {
+  display: flex;
+  align-items: center;
+}
+
+.header-display p {
+  color: var(--accent);
+  margin: 5px;
+  font-size: 1.4rem;
+  word-spacing: 0.3rem;
+}
+
+pre {
+  padding: 10px;
+  margin: 0;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+.crntmonth {
+	font-size: 1.4rem;
+	color: var(--accent);
+	padding: 10px;
+	margin: 0;
+}
+
+.days, .week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin: auto;
+  
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+.week div,
+.days div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.8rem;
+  width: 2.8rem;
+  border-radius: 100%;
+}
+.days div:hover {
+  background: var(--accent-2);
+  color: white;
+  cursor: pointer;
+}
+.week div {
+  opacity: 0.5;
+}
+
+.display-selected {
+  margin-bottom: 10px;
+  padding: 20px 20px;
+  text-align: center;
+}
+
 </style>
 
 
@@ -128,699 +137,267 @@
 
 	
 	
-	
-	
 	<!-- Map -->
 	<div id="map" class="mainmap flex-fill"></div>	
 	
-	
-	<!-- Responsive sidebar -->
-	<div class="sidebar vh-100">
-        
-        <nav class="navbar navbar-expand-sm bg-transparent ms-3 p-1" id="topnav">
-			 
-			<button class="navbar-toggler border border-3 border-dark bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-				
-            </button>
-            
-        </nav>
-        <div class="container-fluid d-flex m-0 p-0">
-			<nav id="leftnav" class="d-flex flex-column flex-shrink-1 offcanvas-sm offcanvas-start opacity-75">
-                <div class="offcanvas-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-label="Close"></button>
-                </div>
-                <div class="flex-column h-100">
-					<div class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .9; width:200px;">
-						<img src="./images/1968logo.png" width="300" class="img-fluid">  
-					</div>
-					<div class="bg-white rounded p-2 m-3" style="--bs-bg-opacity: .9;">
-						<div class="row justify-content-left p-2">
-							<div class="d-grid col-sm-6 mx-auto p-0 border border-primary ms-0 w-50" id="monthScrl" onWheel="scrllM(event);">
-								<button class="btn btn-lg" onclick="mnthNum -= 1; chMnth(monthScrl);">Dec</button>
-								<button class="btn btn-lg bg-info">All</button>
-								<button class="btn btn-lg" onclick="mnthNum += 1; chMnth(monthScrl);">Jan</button>
-							</div>
-							<div class="d-none col-sm-5 mx-auto p-0 border border-primary w-50" id="dayScrl" onWheel="scrllD(event);" >
-								<button class="btn btn-lg" onclick="dayNum -= 1; chDay(monthScrl);">31</button>
-								<button class="btn btn-lg bg-info">All</button>
-								<button class="btn btn-lg" onclick="dayNum += 1; chDay(monthScrl);">1</button>
-							</div>
-						</div>
-						
-						
-				
-						
-						
-						
-						<div class="dropdown mt-2">
-							<button id="topicBtn" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Select Topic
-							</button>
-							<ul class="dropdown-menu">
-								
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('all');">All</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Coup d'état');">Coup d'état</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Disaster');">Disaster</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Election');">Election</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Nuclear weapons');">Nuclear weapons</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Prague Spring');">Prague Spring</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Protest');">Protest</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Technology');">Technology</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Vietnam War');">Vietnam War</a></li>
-								<li><a class="dropdown-item" href="#" onclick="changeKeyword('Warfare');">Warfare</a></li>
-							</ul>
-						</div>
-					</div>
-					<div id="eventList" class="bg-white rounded p-2 m-3 overflow-auto" style="--bs-bg-opacity: .9; height: calc(100vh - 400px);">
-						<p><b>Events</b></p>
-					</div>
-				</div>
-			</nav>
-           
-		</div>
-	
+	<!-- Logo -->
+	<div class="logo bg-white rounded p-2 m-3" style="--bs-bg-opacity: .9;">
+		<img src="./images/1968logo.png" width="200" class="img-fluid">  
 	</div>
 	
 	
+	<!-- Responsive sidebar -->
+	
+		
+	<div class="fixed-top ms-0" style="width:325px">
+		<nav class="navbar navbar-expand-sm bg-transparent">
+				 
+				<button class="hamburger navbar-toggler border border-2 border-dark bg-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+		</nav>
+		
+		<nav id="leftnav" class="flex-column d-flex flex-shrink-0 offcanvas-sm offcanvas-start vh-100 ms-2">
+			<div class="offcanvas-header">
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#leftnav" aria-controls="leftnav" aria-label="Close"></button>
+			</div>
+			
+			
+			<div class="bg-white rounded mb-2 p-1" style="--bs-bg-opacity: .9;">
+				<div class="dropdown text-center">
+					<button id="topicBtn" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Topic Filter
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('all');">All</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Coup d`état');">Coup d'état</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Court case');">Court case</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Disaster');">Disaster</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Election');">Election</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Nuclear weapons');">Nuclear weapons</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Prague Spring');">Prague Spring</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Protest');">Protest</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Technology');">Technology</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Vietnam War');">Vietnam War</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Warfare');">Warfare</a></li>
+					</ul>
+				</div>
+			</div>
+			
+			
+			<div  class="calendar bg-white rounded mb-2 p-1"  id="calendar" style="--bs-bg-opacity: .9;">
+				<div class="row align-items-center justify-content-center text-center monthheader">
+					<div class="col">
+						<pre class="left" role="button">◀</pre>
+					</div>
+					
+					<div class="col monthselector align-items-center">
+						<p class="crntmonth">""</p>
+					</div>
+					<div class="col">
+						<pre class="right" role="button">▶</pre>
+					</div>
+				</div>
+				<div class="week">
+					<div>Sun</div>
+					<div>Mon</div>
+					<div>Tue</div>
+					<div>Wed</div>
+					<div>Thu</div>
+					<div>Fri</div>
+					<div>Sat</div>
+				</div>
+				<div class="days"></div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" id="fltmnthchk" name="fltmnthchk" onclick="filterMapByMonth()">
+					<label class="form-check-label">Filter map by selected month </label>
+				</div>
+			</div>	
+			
+			<div id="eventList" class="bg-white rounded p-1 overflow-auto mb-0" style="--bs-bg-opacity: .9;">
+			</div>
+		
+		
+		</div>
 
+	</div>	
+	
+	
+	
+	
 </body>
 <script src="events.json" type="text/javascript"></script>
 <script src="CShapes-2.0.geojson" type="text/javascript"></script>
 
 
 <script>
-	const loadingScreen = document.querySelector('.loading-screen');
-	window.addEventListener('load', () => {
-			loadingScreen.style.opacity = '0';
-			setTimeout(() => {
-				
-				loadingScreen.style.display = 'none';
-			}, 200);
+let currentMonth = document.querySelector(".crntmonth");
+let days = document.querySelector(".days");
+let previous = document.querySelector(".left");
+let next = document.querySelector(".right");
+let selected = document.querySelector(".selected");
+
+let date = new Date("January 01, 1968");
+
+let year = 1968;
+let month = 0;
+
+function displayCalendar() {
+	const firstDay = new Date(year, month, 1);
+	const lastDay = new Date(year, month + 1, 0);
+	const firstDayIndex = firstDay.getDay(); //4
+	const numberOfDays = lastDay.getDate(); //31
+
+	let formattedDate = date.toLocaleString("en-US", {
+		month: "long"
+	});
+
+	currentMonth.innerHTML = `${formattedDate}`;
+
+	for (let x = 1; x <= firstDayIndex; x++) {
+		const div = document.createElement("div");
 		
-	});
-	
-	const mnthSel = document.querySelector("#mnth");
+		div.innerHTML += "";
+		days.appendChild(div);
+	}
 
-	var mnthNum = 0;
-	var dayNum = 0;
-	var mnthArray = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	for (let i = 1; i <= numberOfDays; i++) {
+		let div = document.createElement("div");
+		let currentDate = new Date(year, month, i);
 	
-	var filterKey = 'all';	
-	var fltDay = 0;
-	var fltMonth = 0;
-	var prevDate = '';
-	
-	var map = L.map('map', {
-		worldCopyJump: true,
-		center:[40, -10],
-		zoomSnap: 0.25,
-		zoom: 2.5,
-		maxZoom: 19,
-		minZoom: 2,
-		zoomControl: false
-	});
-	
-	var offcanvasElement = document.getElementById("leftnav");
-	var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-	
-	var nukeIcon = new L.Icon({
-		iconUrl: './icons/fluent-emoji-high-contrast--radioactive.png',
-		iconSize:     [24, 24],
-		iconAnchor:   [12, 12]
-	});
-	
-	var voteIcon = new L.Icon({
-		iconUrl: './icons/fluent-emoji-high-contrast--cross-mark-button.png',
-		iconSize:     [24, 24],
-		iconAnchor:   [12, 12]
-	});
-
-	var techIcon = new L.Icon({
-		iconUrl: './icons/fluent-emoji-high-contrast--light-bulb.png',
-		iconSize:     [24, 24],
-		iconAnchor:   [12, 12]
-	});
-	
-	var fistIcon = new L.Icon({
-		iconUrl: './icons/fluent-emoji-high-contrast--raised-fist.png',
-		iconSize:     [24, 24],
-		iconAnchor:   [12, 12]
-	});
-	
-	var warIcon = new L.Icon({
-		iconUrl: './icons/fluent-emoji-high-contrast--crossed-swords.png',
-		iconSize:     [24, 24],
-		iconAnchor:   [12, 12]
-	});
-	
-	var fireIcon = new L.Icon({
-		iconUrl: './icons/fluent-emoji-high-contrast--fire.png',
-		iconSize:     [24, 24],
-		iconAnchor:   [12, 12]
-	});
-
-	var coupIcon = new L.Icon({
-		iconUrl: './icons/fluent-emoji-high-contrast--military-helmet.png',
-		iconSize:     [24, 24],
-		iconAnchor:   [12, 12]
-	});
-
-	L.control.zoom({
-		position: 'bottomright'
-	}).addTo(map);
-
-	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		noWrap: true
+		div.dataset.date = currentDate.toDateString();
+		dateId = currentDate.toISOString().split('T')[00];
 		
-	}).addTo(map);
-	
-	function markerClick(e) {
-  		
-  		clickedMarker = e.target;
-  		eventTitle = clickedMarker.feature.properties.title;
-  		eventLoc = clickedMarker.feature.properties.location;
-  		eventBlurb = clickedMarker.feature.properties.description;
-  		eventDate = clickedMarker.feature.properties.datetxt;
-  		eventKeys = clickedMarker.feature.properties.keywords;
-  		eventImg = clickedMarker.feature.properties.image;
-  		eventAlt = clickedMarker.feature.properties.alt;
-  		
-  		if (clickedMarker.feature.properties.attr == null) {
-            eventAttr = ""
-        } else {
-            eventAttr = '<span style="font-size:50%;">' + clickedMarker.feature.properties.attr + '</span>'
-        };
-  		
-  		let ibHead = document.getElementById('infoBoxHead');
-  		ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
-  		let ibBody = document.getElementById('infoBoxBody');
-  		ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right;  margin-left:8px;"><img src="./images/' + eventImg + '" class="img-fluid" alt="' + eventAlt + '" title="' + eventAlt + '" >' + eventAttr + '</div><p>' + eventBlurb + '</p>';
+		console.log(dateId);
+		
+		div.id = dateId.substring(5, 12);
+		div.innerHTML += i;
 
-  		if (eventKeys.indexOf(', ') == -1) {
-			createKeylink(eventKeys)
+		
+		
+		days.appendChild(div);
+
+	}
+}
+
+// Call the function to display the calendar
+displayCalendar();
+
+previous.addEventListener("click", () => {
+	days.innerHTML = "";
+	
+
+	if (month == 0) {
+		month = 11;
+	} else {
+	month = month - 1;
+	}
+	date.setMonth(month);
+	displayCalendar();
+	displaySelected();
+	refreshMap();
+});
+
+next.addEventListener("click", () => {
+	days.innerHTML = "";
+	
+
+	if (month == 11) {
+		month = 0;
+	} else {
+		month += 1;
+	};
+	date.setMonth(month);
+	date.setYear(1968);
+	displayCalendar();
+	displaySelected();
+	refreshMap();
+});
+
+calendar.addEventListener("touchstart", strtMnthTch, false);
+calendar.addEventListener("touchmove", mnthTch, false);
+
+ 
+// Swipe Up / Down / Left / Right
+var initMX = null;
+
+ 
+function strtMnthTch(e) {
+
+  initMX = e.touches[0].clientX;
+}
+ 
+function mnthTch(e) {
+  
+ 
+	if (initMX === null) {
+		return;
+	}
+ 
+  
+	var currMX = e.touches[0].clientX;
+	var diffX = initMX - currMX;
+ 
+	if (diffX > 0) {
+		if (month == 11) {
+			month = 0;
 		} else {
-			var spltKeys = eventKeys.split(', ');
-			createKeylink(spltKeys[0]);
-			const breakKeys = document.createElement('br');
-			ibBody.appendChild(breakKeys);
-			createKeylink(spltKeys[1]);
-			
-		};
-  		
-  	
-  		
-  		
-  		
-  		var coOrds = clickedMarker.getLatLng();
-		map.flyTo([coOrds.lat, coOrds.lng], 5);
-  		$("#infoBox").modal('show');
-		
-		
-		
-
-	}
-	
-	function cntryClick(e) {
-  		
-  		clickedCntry = e.target;
-  		cntryName = clickedCntry.feature.properties.cntry_name;
-  		
-  		
-  		let ibHead = document.getElementById('infoBoxHead');
-  		ibHead.innerHTML='<h4>' + cntryName + '</h4>';
-  		let ibBody = document.getElementById('infoBoxBody');
-  		ibBody.innerHTML='Put something here';
-  		$("#infoBox").modal('show');
-		
-		
-		
-
-	}
-	
-	function onEachFeature(feature, layer) {
-		
-		
-		
-		const eventLst = document.getElementById('eventList');
-		
-		const newDate = document.createElement('p');
-		if (prevDate !== feature.properties.datetxt) {
-			newDate.innerText = feature.properties.datetxt;
-		};
-		newDate.setAttribute("style", "font-size:70%; margin-bottom:0;");
-		
-		prevDate = feature.properties.datetxt;
-		
-		
-		if (feature.properties.keywords.indexOf(', ') == -1) {
-				iconKey = feature.properties.keywords
-				
-			} else {
-				var spltKeys = feature.properties.keywords.split(', ');
-				iconKey = spltKeys[0]
-				};
-					
-		switch(iconKey) {
-			case "Nuclear weapons":
-				layer.setIcon(nukeIcon);						
-				break;
-			case "Warfare":
-				layer.setIcon(warIcon);						
-				break;
-			case "Disaster":
-				layer.setIcon(fireIcon);						
-				break;
-			case "Protest":
-				layer.setIcon(fistIcon);						
-				break;
-			case "Technology":
-				layer.setIcon(techIcon);						
-				break;
-			case "Election":
-				layer.setIcon(voteIcon);						
-				break;
-			case "Coup d'état":
-				layer.setIcon(coupIcon);						
-				break;
+			month += 1;
 		};
 		
-		
-		const newEvent = document.createElement('a');
-		newEvent.href = "#";
-		newEvent.innerText = feature.properties.title;
-		newEvent.setAttribute("style", "display:block; padding-bottom:6px;");
-		newEvent.setAttribute("data-bs-dismiss", "offcanvas");
-		newEvent.setAttribute("data-bs-target", "#leftnav");
-		
-		newEvent.onclick = function () {
-			eventTitle = feature.properties.title;
-			eventLoc = feature.properties.location;
-			eventBlurb = feature.properties.description;
-			eventDate = feature.properties.datetxt;
-			eventKeys = feature.properties.keywords;
-			eventImg = feature.properties.image;
-			eventAlt = feature.properties.alt;
-				
-			if (feature.properties.attr == null) {
-				eventAttr = ""
-			} else {
-				eventAttr = '<span style="font-size:50%;">' + feature.properties.attr + '</span>'
-			};
-			let ibHead = document.getElementById('infoBoxHead');
-			ibHead.innerHTML='<h4>' + eventTitle + '</h4>';
-			let ibBody = document.getElementById('infoBoxBody');
-			ibBody.innerHTML='<h5>' + eventDate + '</h5><h5>Location: ' + eventLoc + '</h5><div style="width:200px; line-height:50%; float:right; margin-left:8px;"><img src="./images/' + eventImg + '" class="img-fluid" alt="' + eventAlt + '" title="' + eventAlt + '" >' + eventAttr + '</div><p>' + eventBlurb + '</p>';
-			
-				
-			//Multi Keyword
-			if (eventKeys.indexOf(', ') == -1) {
-				createKeylink(eventKeys)
-			} else {
-			var spltKeys = eventKeys.split(', ');
-			createKeylink(spltKeys[0]);
-			const breakKeys = document.createElement('br');
-			ibBody.appendChild(breakKeys);
-			createKeylink(spltKeys[1]);
-			
-			
-			};
-				
-				
-				
-				var coOrds = layer.getLatLng();
-				map.flyTo([coOrds.lat, coOrds.lng], 5);
-				$("#infoBox").modal('show');
-				
-			};
-		
-		
-		eventLst.appendChild(newDate);
-		eventLst.appendChild(newEvent);
-		
-		
-
-		
-
-		layer.on({
-			click: markerClick
-		});
-		
-	}
-	
-	function createKeylink(addKey) {
-		let ibBody = document.getElementById('infoBoxBody');
-		const kwordLink = document.createElement('a');
-		kwordLink.href = "#";
-		kwordLink.innerText = addKey;
-		kwordLink.setAttribute("style", "font-style:italic;");
-		kwordLink.onclick = function () {
-			topicBtn.innerHTML = addKey;
-			filterKey = addKey;
-			$("#infoBox").modal('hide');
-			
-			if (screen.width <= 540) {
-				offcanvas.toggle()};
-			refreshMap();
+	} else {
+		if (month == 0) {
+			month = 11;
+		} else {
+			month -= 1;
 		};
-		ibBody.appendChild(kwordLink);
-	}
 	
-	
-	function onEachCountry(feature, layer) {
-		layer.on({
-			click: cntryClick
-		});
 		
-	}
+	};
+	date.setMonth(month);
+	date.setYear(1968);
+	days.innerHTML = "";
+	displayCalendar();
+	displaySelected();
+	refreshMap();
+	initMX = null;
+   
+//  e.preventDefault();
+}
 
 
-	//Hide country layer when zoomed in
-	var cntryLayer = new L.geoJSON(countries68, {
-		onEachFeature: onEachCountry
-	}).addTo(map);
-	
-	cntryLayer.setStyle({
-		color: "#ff4000", 
-		weight: 1, 
-		opacity: 0.3
+
+
+function displaySelected() {
+  const dayElements = document.querySelectorAll(".days div");
+  dayElements.forEach((day) => {
+    day.addEventListener("click", (e) => {
+		
+
+		let selDate = e.target.id.split("-");
+//		changeDate(selDate[0], selDate[1]);
+
+
+		eventId = selDate[0] + "/" + selDate[1];
+		document.getElementById(eventId).scrollIntoView({
+		behavior: 'smooth'
+		}); 
+		
+		$(document.getElementById(eventId)).animate({ color: "lightblue"},'quick');
+		$(document.getElementById(eventId)).animate({ color: "black"},'quick');
+
+			
+		
+		
 	});
-	
-	map.on('zoomend', function (e) {
-		
-		if (e.target._zoom >= 10) {
-			map.removeLayer(cntryLayer);
-		} else {
-			map.addLayer(cntryLayer);
-		};
-	});
-	
-	function applyFilter(feature) {
-		
-		
-			if (fltDay > 0) {
-				if (feature.properties.day != fltDay) {
-					return false;
-				}
-			};
-			if (fltMonth > 0) {
-				if (feature.properties.month != fltMonth) {
-					
-					return false;
-					
-				}
-			};
-		
-		
-		if (filterKey !== 'all') {
-			if (feature.properties.keywords.indexOf(filterKey) == -1) return false;
-		};
-		
-		return true;
-			
-		
+  });
 
-	}
-
-	function refreshMap() {
-		let newEventList = document.getElementById('eventList');
-		newEventList.innerHTML='<p><b>Events</b></p>';
 		
-		
-		markerLayer.clearLayers();
-		markerLayer = L.geoJSON(testdb, {
-			filter: applyFilter,
-			onEachFeature: onEachFeature,
-			
-		}).addTo(map);
-		map.flyTo([40, -10], 2.5)
-		prevDate = '';
-	}
-	
-	
-	var markerLayer = new L.geoJSON(testdb, {
-		
-		onEachFeature: onEachFeature
-	}).addTo(map);
-	prevDate = '';
-	
-	function changeDate(newMnth, newDay) {
-		
-		fltMonth = newMnth;
-		fltDay = newDay;
-		
-		refreshMap();
-	
-	}
-	
-	
-	
-	
-
-	function changeKeyword(keyword) {
-		filterKey = keyword;
-		if (keyword === 'all') {
-			topicBtn.innerHTML = 'Select Topic';
-		} else  topicBtn.innerHTML = keyword;
-		refreshMap();
-		
-	}
-	
-	function scrllM(event) {
-		if (event.deltaY > 0) {
-			mnthNum += 1
-		} else {
-			mnthNum -= 1};
-		chMnth(event);
-	}
-
-	function scrllD(event) {
-		if (event.deltaY > 0) {
-			dayNum += 1
-		} else {
-			dayNum -= 1};
-		chDay(event);
-	}
-
-	function chMnth(event) {
-		mnthA = mnthArray[mnthNum - 1];
-		mnthB = mnthArray[mnthNum];
-		mnthC = mnthArray[mnthNum + 1];	
-		
-		
-		if (mnthNum > 12  || mnthNum == 0)  {
-			mnthNum = 0;
-			dayNum = 0;
-			mnthA = 'Dec';
-			mnthB = 'All';
-			mnthC = 'Jan';
-			
-		} else {
-			if (mnthNum == 12 || mnthNum < 0) {
-				mnthNum = 12;
-				mnthA = 'Nov';
-				mnthB = 'Dec';
-				mnthC = 'All';
-			
-			} else {
-			if (mnthNum == 1) {
-				mnthA = 'All';
-				mnthB = 'Jan';
-				mnthC = 'Feb';
-			
-				};
-			};
-		};	
-		
-		// document.getElementById("monthScrl").innerHTML = '<h1>' + mnthA + '</h1><h1 class="bg-info">' + mnthB + '</h1><h1>' + mnthC + '</h1>';
-		// Create DOM with onclicks for up down
-		document.getElementById("monthScrl").innerHTML = '';
-		
-		const monthDiv = document.getElementById('monthScrl');
-		addMnth = document.createElement('button');
-		addMnth.innerText = mnthA;
-		addMnth.classList.add("btn");
-		addMnth.classList.add("btn-lg");
-		addMnth.onclick = function () {
-			mnthNum -= 1;
-			chMnth(monthDiv);
-			};
-		monthDiv.appendChild(addMnth);
-		
-		
-		addMnth = document.createElement('button');
-		addMnth.innerText = mnthB;
-		addMnth.classList.add("btn");
-		addMnth.classList.add("bg-info");
-		addMnth.classList.add("btn-lg");
-		monthDiv.appendChild(addMnth);
-		
-		
-		addMnth = document.createElement('button');
-		addMnth.innerText = mnthC;
-		addMnth.classList.add("btn");
-		addMnth.classList.add("btn-lg");
-		addMnth.onclick = function () {
-			mnthNum += 1;
-			chMnth(monthDiv);
-			};
-		monthDiv.appendChild(addMnth);
-		
-		//Handle days 
-		if (mnthNum == 0) {
-			//document.getElementById("dayScrl").innerHTML = '<button class="btn btn-lg" onclick="";>Boop</button><button class="btn btn-lg bg-info">All</button><button class="btn btn-lg" onclick="">All</button>';
-			document.getElementById("dayScrl").classList.remove("d-grid");
-			document.getElementById("dayScrl").classList.add("d-none");
-			
-		} else {
-			daysInMonth = new Date(1968, mnthNum, 0).getDate();
-			if (dayNum > daysInMonth) {dayNum = daysInMonth};
-			document.getElementById("dayScrl").classList.add("d-grid");
-			document.getElementById("dayScrl").classList.remove("d-none");
-			chDay(event);
-		};
-		changeDate(mnthNum, dayNum);
-	}
-
-
-	function chDay(event) {
-		
-		
-		// console.log(mnthArray[mnthNum] + ': ' + daysInMonth);
-		
-		dayA = dayNum - 1;
-		dayB = dayNum;
-		dayC = dayNum + 1;
-		 
-		if (dayNum > daysInMonth || dayNum == 0)  {
-			dayNum = 0
-			dayA = daysInMonth;
-			dayB = 'All';
-			dayC = 1;
-			
-		} else {
-		
-			if (dayNum == daysInMonth || dayNum < 0) {
-				dayNum = daysInMonth
-				dayA = daysInMonth - 1;
-				dayB = daysInMonth;
-				dayC = 'All';
-			
-			} else {
-			if (dayNum == 1) {
-				dayA = 'All';
-				dayB = 1;
-				dayC = 2;
-				};
-			};	
-		};
-		// console.log(dayNum);
-		document.getElementById("dayScrl").innerHTML = '';
-		
-		const dayDiv = document.getElementById('dayScrl');
-		addDay = document.createElement('button');
-		addDay.innerText = dayA;
-		addDay.classList.add("btn");
-		addDay.classList.add("btn-lg");
-		addDay.onclick = function () {
-			dayNum -= 1;
-			chDay(dayDiv);
-			};
-		dayDiv.appendChild(addDay);
-		
-		
-		addDay = document.createElement('button');
-		addDay.innerText = dayB;
-		addDay.classList.add("btn");
-		addDay.classList.add("bg-info");
-		addDay.classList.add("btn-lg");
-		dayDiv.appendChild(addDay);
-		
-		
-		addDay = document.createElement('button');
-		addDay.innerText = dayC;
-		addDay.classList.add("btn");
-		addDay.classList.add("btn-lg");
-		addDay.onclick = function () {
-			dayNum += 1;
-			chDay(dayDiv);
-			};
-		dayDiv.appendChild(addDay);
-		changeDate(mnthNum, dayNum);
-	}
-
-
-
-
-	monthScrl.addEventListener("touchstart", strtMnthTch, false);
-	monthScrl.addEventListener("touchmove", mnthTch, false);
-	dayScrl.addEventListener("touchstart", strtDayTch, false);
-	dayScrl.addEventListener("touchmove", dayTch, false);
-	 
-	// Swipe Up / Down / Left / Right
-	var initMY = null;
-
-	 
-	function strtMnthTch(e) {
-
-	  initMY = e.touches[0].clientY;
-	}
-	 
-	function mnthTch(e) {
-	  
-	 
-		if (initMY === null) {
-			return;
-		}
-	 
-	  
-		var currMY = e.touches[0].clientY;
-		var diffY = initMY - currMY;
-	 
-		if (diffY > 0) {
-			mnthNum += 1;
-			chMnth(e);
-		} else {
-			mnthNum -= 1;
-			chMnth(e);
-		}  
-		
-	  initMY = null;
-	   
-	  e.preventDefault();
-	}
-
-
-	function strtDayTch(e) {
-
-	  initDY = e.touches[0].clientY;
-	}
-	 
-	function dayTch(e) {
-	  
-	 
-		if (initDY === null) {
-			return;
-		}
-	 
-	  
-		var currDY = e.touches[0].clientY;
-		var diffY = initDY - currDY;
-	 
-		if (diffY > 0) {
-			dayNum += 1;
-			chDay(e);
-		} else {
-			dayNum -= 1;
-			chDay(e);
-		}  
-		
-	  initDY = null;
-	   
-	  e.preventDefault();
-	}
+   
+}
+displaySelected();
 
 </script>
-
+<script src="script.js" type="text/javascript"></script>
 
 </html>
