@@ -10,7 +10,7 @@ var testdb =
 				"month": "01",
 				"datetxt": "5th January",
 				"location": "Spanish Hall (Španělský sál), Prague, Czechoslovakia",
-				"description": "Alexander Dubček was elected First Secretary of the Communist Party of Czechoslovakia (KSČ)",
+				"description": "Alexander Dubček was elected First Secretary of the Communist Party of Czechoslovakia (KSČ). Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
 				"keywords": "Election, Prague Spring",
 				"image": "Dubcek.jpg",
 				"alt": "Portrait of Alexander Dubček"
@@ -24,7 +24,83 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
-				"title": "Nuclear bomber crashes in Greenland",
+				"title": "John Gorton sworn in as Prime Minister of Australia",
+				"day": "10",
+				"month": "01",
+				"datetxt": "10th January",
+				"location": "Provisional Parliament House, Canberra, Australia",
+				"description": "John Gorton sworn in as the 19th Prime Minister of Australia following the disappearance of Harold Holt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Election",
+				"image": "Gorton.jpg",
+				"alt": "Official portrait of John Gorton"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [149.12978774418076, -35.30207176862414]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Four Russian dissident writers convicted",
+				"day": "12",
+				"month": "01",
+				"datetxt": "12th January",
+				"location": "Moscow City Court, Moscow, USSR",
+				"description": "Following a show trial, the Russian dissident writers Yuri Galanskov, Alexander Ginzburg, Alexey Dobrovolsky and Vera Lahkova were found guilty of Anti-Soviet agitation and propaganda. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Court case",
+				"image": "GalanskovGinzburg.jpg",
+				"alt": "Photographs of Yuri Galanskov and Alexander Ginzburg"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [37.707157909260886, 55.80270787584719]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Johnny Cash recorded a live album at Folsom State Prison",
+				"day": "13",
+				"month": "01",
+				"datetxt": "13th January",
+				"location": "Folsom State Prison, California, USA",
+				"description": "<i>Johnny Cash at Folsom Prison</i> was released on 6th May 1968 on Columbia Records, reaching number one on the US Top Country chart, number 13 on the US Pop Albums chart and number 7 on the UK Albums Chart. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Music",
+				"image": "cashatfolsom.jpg",
+				"alt": "Cover image of Johnny Cash at Folsom Prison"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-121.1625, 38.695]
+			}
+		
+		},		
+				{
+			"type": "Feature",
+			"properties": {
+				"title": "First Khmer Rouge offensive",
+				"day": "17",
+				"month": "01",
+				"datetxt": "17th January",
+				"location": " Bay Damran, Battambang Province, Cambodia",
+				"description": "Pol Pot would later identify this attack as marking the beginning of the revolutionary war. The operation had been betrayed by an informer and the rebels, led by Sophal himself, were driven off with two men killed. But they were able to seize a number of weapons. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Warfare",
+				"image": "",
+				"alt": ""
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [103.166667, 12.983333]
+			}
+		
+		},		
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Nuclear bomber crashed in Greenland",
 				"day": "21",
 				"month": "01",
 				"datetxt": "21st January",
@@ -43,7 +119,7 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
-				"title": "Start of the Battle of Khe Sanh",
+				"title": "The Battle of Khe Sanh started",
 				"day": "21",
 				"month": "01",
 				"datetxt": "21st January",
@@ -56,6 +132,26 @@ var testdb =
 			"geometry": {
 				"type": "Point",
 				"coordinates": [106.72423, 16.65420]
+			}
+		
+		},
+				{
+			"type": "Feature",
+			"properties": {
+				"title": "French submarine <i>Minerve</i> sank",
+				"day": "28",
+				"month": "01",
+				"datetxt": "28th January",
+				"location": "Gulf of Lion, Mediterranean Sea",
+				"description": "While returning to her home port of Toulon in bad weather, the French <i>Daphné</i>-class submarine <i>Minerve</i> sank with the loss of all hands.<br><br>In the following years the families of the 52 crew batlled to find out what caused the sinking, but the <i>Secret Défense</i> classified the file for 50 years. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"keywords": "Disaster",
+				"image": "Doris.jpg",
+				"alt": "Doris, a sister ship of Minerve, in 1994.",
+				"attr": "<a href='https://creativecommons.org/licenses/by-sa/3.0/' target='_blank'>CC BY-SA 3.0</a> Guillaume Rueda, Le sous-marin Doris à Saint-Raphaël, après la revue navale du 14 août 1994. <a href='https://www.netmarine.net/bat/smarins/doris/photo02.htm' target='_blank'>Source</a>"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [5.67786, 42.78781]
 			}
 		
 		},
@@ -159,12 +255,12 @@ var testdb =
 			"type": "Feature",
 			"properties": {
 				"title": "Peruvian coup d'état",
-				"day": "3",
+				"day": "03",
 				"month": "10",
 				"datetxt": "3rd October",
 				"location": "Palacio de Gobierno, Lima, Peru",
 				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
-				"keywords": "Coup d'état",
+				"keywords": "Coup d`état",
 				"image": "PeruCoup.jpg",
 				"alt": "Military vehicles in front of the Palacio de Gobierno",
 			},

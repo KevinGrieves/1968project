@@ -82,6 +82,12 @@ var legalIcon = new L.Icon({
 	iconAnchor:   [12, 12]
 });
 
+var musicIcon = new L.Icon({
+	iconUrl: './icons/fluent-emoji-high-contrast--musical-note.png',
+	iconSize:     [24, 24],
+	iconAnchor:   [12, 12]
+});
+
 L.control.zoom({
 	position: 'bottomright'
 }).addTo(map);
@@ -195,6 +201,9 @@ function onEachFeature(feature, layer) {
 			break;
 		case "Court case":
 			layer.setIcon(legalIcon);						
+			break;
+		case "Music":
+			layer.setIcon(musicIcon);						
 			break;
 	};
 	
