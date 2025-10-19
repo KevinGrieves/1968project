@@ -163,8 +163,8 @@ pre {
 			</div>
 			
 			
-			<div class="bg-white rounded mb-2 p-1" style="--bs-bg-opacity: .9;">
-				<div class="dropdown text-center">
+			<div class="bg-white rounded mb-2 p-2" style="--bs-bg-opacity: .9;">
+				<div class="dropdown text-center mb-2">
 					<button id="topicBtn" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Topic Filter
 					</button>
@@ -183,6 +183,16 @@ pre {
 						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Warfare');">Warfare</a></li>
 					</ul>
 				</div>
+			
+				<form class="row" onsubmit="alert(searchtext.value);">
+					<div class="input-group input-group-sm m-auto w-75">
+					
+						<input id="searchtext" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+						<span class="input-group-text" id="basic-addon2">
+							<i class="bi bi-search" onclick="alert(searchtext.value);"></i>
+						</span>
+					</div>
+				</form>
 			</div>
 			
 			
@@ -210,16 +220,19 @@ pre {
 				</div>
 				<div class="days"></div>
 				<div class="form-check">
-					<input class="form-check-input" type="checkbox" id="fltmnthchk" name="fltmnthchk" onclick="filterMapByMonth()">
-					<label class="form-check-label">Filter map by selected month </label>
+					
+					<label class="form-check-label">
+						<input class="form-check-input" type="checkbox" id="fltmnthchk" name="fltmnthchk" onclick="filterMapByMonth()">
+						Filter map by selected month
+						</label>
 				</div>
 			</div>	
 			
 			<div id="eventList" class="bg-white rounded p-1 overflow-auto mb-0" style="--bs-bg-opacity: .9;">
 			</div>
+			
 		
-		
-		</div>
+		</nav>
 
 	</div>	
 	
@@ -296,7 +309,8 @@ previous.addEventListener("click", () => {
 	date.setMonth(month);
 	displayCalendar();
 	displaySelected();
-	refreshMap();
+	//refreshMap();
+	filterMapByMonth();
 });
 
 next.addEventListener("click", () => {
@@ -312,16 +326,16 @@ next.addEventListener("click", () => {
 	date.setYear(1968);
 	displayCalendar();
 	displaySelected();
-	refreshMap();
+	// refreshMap();
+	filterMapByMonth();
 });
 
 calendar.addEventListener("touchstart", strtMnthTch, false);
 calendar.addEventListener("touchmove", mnthTch, false);
 
  
-// Swipe Up / Down / Left / Right
-var initMX = null;
 
+var initMX = null;
  
 function strtMnthTch(e) {
 
@@ -360,7 +374,8 @@ function mnthTch(e) {
 	days.innerHTML = "";
 	displayCalendar();
 	displaySelected();
-	refreshMap();
+	//refreshMap();
+	filterMapByMonth();
 	initMX = null;
    
 //  e.preventDefault();

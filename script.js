@@ -24,7 +24,7 @@ var prevDate = '';
 var map = L.map('map', {
 	worldCopyJump: true,
 	center:[40, -25],
-	zoomSnap: 0.25,
+	zoomSnap: 0.05,
 	zoom: 2.25,
 	maxZoom: 19,
 	minZoom: 2,
@@ -87,6 +87,21 @@ var musicIcon = new L.Icon({
 	iconSize:     [24, 24],
 	iconAnchor:   [12, 12]
 });
+
+
+// Prevent default action on search form
+
+$("button").on('click',function(e){
+    e.preventDefault();
+
+});
+
+
+$("form").on('submit',function(e){
+    e.preventDefault();
+
+});
+
 
 L.control.zoom({
 	position: 'bottomright'
@@ -338,6 +353,8 @@ function applyFilter(feature) {
 	};
 	return true;
 }
+
+
 
 function refreshMap() {
 	let newEventList = document.getElementById('eventList');
