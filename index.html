@@ -116,7 +116,7 @@ pre {
 	
 	</div>
 
-	<!-- Modal -->
+	<!-- Event Modal -->
 	<div class="infoBox modal fade" id="infoBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
@@ -135,7 +135,39 @@ pre {
 		</div>
 	</div>
 
-	
+	<!-- Advanced Search Modal -->
+
+	<div class="advSearch modal fade" id="advSearch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header" id="advSearchHead">
+					<h1 class="modal-title fs-5">Advanced Search</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="advSearchBody">
+					
+					<form class="col" onsubmit="alert(searchtext.value);">
+					<div class="input-group input-group-sm m-auto w-75">
+					
+						<input id="searchtext" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+						<span class="input-group-text" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="right" title="Basic Search">
+							<i class="bi bi-search" onclick="alert(searchtext.value);"></i>
+						</span>
+						
+					</div>
+					<div class="mb-3 form-check">
+						<input type="checkbox" class="form-check-input" id="exampleCheck1">
+						<label class="form-check-label" for="exampleCheck1">Search in selected month</label>
+					</div>
+				</form>
+				</div>
+				<div class="modal-footer" id="advSearchFoot">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<!-- Map -->
 	<div id="map" class="mainmap flex-fill"></div>	
@@ -172,6 +204,7 @@ pre {
 						<li><a class="dropdown-item" href="#" onclick="changeKeyword('all');">All</a></li>
 						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Coup d`état');">Coup d'état</a></li>
 						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Court case');">Court case</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Crime');">Crime</a></li>
 						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Disaster');">Disaster</a></li>
 						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Election');">Election</a></li>
 						<li><a class="dropdown-item" href="#" onclick="changeKeyword('Music');">Music</a></li>
@@ -187,9 +220,12 @@ pre {
 				<form class="row" onsubmit="alert(searchtext.value);">
 					<div class="input-group input-group-sm m-auto w-75">
 					
-						<input id="searchtext" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
-						<span class="input-group-text" id="basic-addon2">
+						<input id="searchtext" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+						<span class="input-group-text" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="right" title="Basic Search">
 							<i class="bi bi-search" onclick="alert(searchtext.value);"></i>
+						</span>
+						<span class="input-group-text" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="right" title="Advanced Search">
+							<i class="bi bi-sliders"  data-bs-toggle="modal" data-bs-target="#advSearch"></i>
 						</span>
 					</div>
 				</form>
@@ -199,14 +235,14 @@ pre {
 			<div  class="calendar bg-white rounded mb-2 p-1"  id="calendar" style="--bs-bg-opacity: .9;">
 				<div class="row align-items-center justify-content-center text-center monthheader">
 					<div class="col">
-						<pre class="left" role="button">◀</pre>
+						<pre class="left" role="button" style="user-select:none;">◀</pre>
 					</div>
 					
 					<div class="col monthselector align-items-center">
 						<p class="crntmonth">""</p>
 					</div>
 					<div class="col">
-						<pre class="right" role="button">▶</pre>
+						<pre class="right" role="button" style="user-select:none;">▶</pre>
 					</div>
 				</div>
 				<div class="week">
@@ -219,12 +255,9 @@ pre {
 					<div>Sat</div>
 				</div>
 				<div class="days"></div>
-				<div class="form-check">
-					
-					<label class="form-check-label">
-						<input class="form-check-input" type="checkbox" id="fltmnthchk" name="fltmnthchk" onclick="filterMapByMonth()">
-						Filter map by selected month
-						</label>
+				<div class="form-check  form-switch ms-1">
+					<input class="form-check-input" type="checkbox" role="switch" id="fltmnthchk" name="fltmnthchk" onclick="filterMapByMonth()">
+					<label class="form-check-label" for="switchCheckDefault">Filter map by selected month</label>
 				</div>
 			</div>	
 			

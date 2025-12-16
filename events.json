@@ -178,6 +178,25 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
+				"title": "The Beatles in Rishikesh",
+				"day": "16",
+				"month": "02",
+				"datetxt": "16th February",
+				"location": "Rishikesh, Uttarakhand, India",
+				"description": "On 24th August 1967 George Harrison, John Lennon, Paul McCartney and their respective partners attended a lecture given by the Maharishi Mahesh Yogi on the subject of Transcendental Meditation at the London Hilton hotel in London. Following the lecture they met the Maharishi in his hotel suite during which he invited the group to attend a ten-day retreat in Bangor, Wales.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit.<br><br>George Harrison, John Lennon and their wives arrived at Rishikesh. They were joined by Paul McCartney and Ringo Starr four days later.<br><br>Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Music",
+				"image": "Maharishi.jpg",
+				"alt": "The Maharishi Mahesh Yogi visiting the Netherlands in 1967"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [78.312774, 30.109745]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"title": "Wahine ferry disaster",
 				"day": "10",
 				"month": "04",
@@ -254,6 +273,22 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
+				"title": "Feminists protested the Miss America Pageant",
+				"day": "07",
+				"month": "09",
+				"datetxt": "7th September",
+				"location": "Atlantic City, New Jersey",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Protest",
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-74.438611, 39.355]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"title": "Peruvian coup d'état",
 				"day": "03",
 				"month": "10",
@@ -285,6 +320,25 @@ var testdb =
 			"geometry": {
 				"type": "Point",
 				"coordinates": [-76.74844, 18.00466]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "300 Million Yen Robbery",
+				"day": "10",
+				"month": "12",
+				"datetxt": "10th December",
+				"location": "Tokyo Japan",
+				"description": "On the morning of 10th December 1968, a young man wearing the uniform of a motorcycle police officer pulled over black Nissan Cedric luxury sedan carrying four employees of the <i>Nihon Shintaku Ginko</i> (Nippon Trust Bank) and three metal cases containing ¥294,307,500.<br><br>The police officer told the car's occupants that he had just been informed that their bank and the bank manager's house had been blown up, and that there was an explosive device planted in their vehicle. The four men exited the car while the police officer searched beneath the car. When flames and smoke billowed from the car the police officer warned them that the car was going to explode. The four men dashed to find cover behind a wall. Peeking over the wall they saw the policeman get in the car and drive away. When there was no explosion the four men found what looked like a warning flare in the road. They also noticed that the motorcycle was a crudely-made replica.<br><br>Despite the efforts of the Tokyo Metropolitan Police Department the thief escaped after transferring the boxes to a previously stolen car, which he also later abandoned after transferring the boxes to yet another stolen car. The police launched a the largest investigation in Japanese history. Lasting seven years the investigation involved around 170,000 officers. In 1988 the statute of limitations passed, meaning that the thief could no longer be tried. The crime remains unsolved.",
+				"keywords": "Crime",
+				"image": "300milyen.jpg",
+				"alt": "Wanted photo released by the Metropolitan Police Department as a montage of the perpetrators of the 300 million yen robbery.",
+				"attr": "<a href='https://creativecommons.org/publicdomain/zero/1.0/deed.en' target='_blank'>CCO 1.0</a> 警視庁, 日本語: 三億円事件の犯人のモンタージュ写真として、1968年12月21日に警視庁が公開した手配写真。 <a href='https://commons.wikimedia.org/wiki/File:%E4%B8%89%E5%84%84%E5%86%86%E4%BA%8B%E4%BB%B6.jpg' target='_blank'>Source</a>"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [139.3982462632258, 35.745760539536285], 
 			}
 		}
 		

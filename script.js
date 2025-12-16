@@ -10,7 +10,7 @@ window.addEventListener('load', () => {
 
 
 
-const mnthSel = document.querySelector("#mnth");
+// const mnthSel = document.querySelector("#mnth");
 
 var mnthNum = 0;
 var dayNum = 0;
@@ -88,6 +88,16 @@ var musicIcon = new L.Icon({
 	iconAnchor:   [12, 12]
 });
 
+var crimeIcon = new L.Icon({
+	iconUrl: './icons/fluent-emoji-high-contrast--police-car-light.png',
+	iconSize:     [24, 24],
+	iconAnchor:   [12, 12]
+});
+
+
+
+
+
 
 // Prevent default action on search form
 
@@ -137,14 +147,14 @@ function markerClick(e) {
 	if (eventKeys.indexOf(', ') == -1) {
 		createKeylink(eventKeys)
 	} else {
-		var spltKeys = eventKeys.split(', ');
+		let spltKeys = eventKeys.split(', ');
 		createKeylink(spltKeys[0]);
 		const breakKeys = document.createElement('br');
 		ibBody.appendChild(breakKeys);
 		createKeylink(spltKeys[1]);
 	};
 	
-	var coOrds = clickedMarker.getLatLng();
+	let coOrds = clickedMarker.getLatLng();
 	map.flyTo([coOrds.lat, coOrds.lng], 5);
 	$("#infoBox").modal('show');
 
@@ -219,6 +229,9 @@ function onEachFeature(feature, layer) {
 			break;
 		case "Music":
 			layer.setIcon(musicIcon);						
+			break;
+		case "Crime":
+			layer.setIcon(crimeIcon);						
 			break;
 	};
 	
