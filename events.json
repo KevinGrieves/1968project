@@ -5,6 +5,25 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
+				"title": "First black female police officer in the United Kingdom",
+				"day": "01",
+				"month": "01",
+				"datetxt": "1st January",
+				"location": "Peel House, Pimlico, London, United Kingdom",
+				"description": "On 1st January, Sislin Fay Allen began training with the Metropolitan Police as the UK's first black woman police officer. Following her move to the UK from her native Jamaica, she qualified as a State Enrolled Nurse in October 1963, securing a position at Croydon’s Queens Hospital. Following the completion of her training, Allen was stationed at Fell Road Police Station in Croydon. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"keywords": "Law Enforcement",
+				"image": "FayAllen.jpg",
+				"alt": "Sislin Fay Allen"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-0.13188, 51.49122]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"title": "Alexander Dubček elected",
 				"day": "05",
 				"month": "01",
@@ -158,6 +177,26 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
+				"title": "Opening ceremony of the Olympic Winter Games",
+				"day": "6",
+				"month": "02",
+				"datetxt": "6th February",
+				"location": "Olympic Stadium, Grenoble, France",
+				"description": "The opening ceremony of the tenth Olympic Winter Games took place on 6th February at the temporary Olympic Stadium in Grenoble, France. Teams from thirty-seven countries participated in thirty-five events.<br><br>The Norwegian team won the most gold medals and topped the overall medal table, ending the domination of the the Soviet Union, which had topped the medal table for every Winter Olymopics since they first comepeted in 1956. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Sport",
+				"image": "Grenoble.jpg",
+				"alt": "The Olympic Stadium, Grenoble",
+				"attr": "<a href='https://creativecommons.org/licenses/by-sa/3.0/' target='_blank'>CC BY-SA 3.0</a> Coljog, Stade olympique de Grenoble 1968 <a href='https://en.wikipedia.org/wiki/Olympic_Stadium_(Grenoble)#/media/File:Stade_olympique_-_Grenoble_1968.jpg' target='_blank'>Source</a>"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [5.732222, 45.165833]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"title": "First Royal Navy submarine test firing of Polaris missile",
 				"day": "15",
 				"month": "02",
@@ -191,6 +230,44 @@ var testdb =
 			"geometry": {
 				"type": "Point",
 				"coordinates": [78.312774, 30.109745]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Inauguration of Auroville",
+				"day": "28",
+				"month": "02",
+				"datetxt": "28th February",
+				"location": "Tamil Nadu and Puducherry, India",
+				"description": "On 28th February 1968 delegates from 124 countries gathered near the city of Pondicherry (Puducherry) in southern India for the inauguration of the experimental, international township of Auroville.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit.<br><br>Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Unity",
+				"image": "Alfassa.jpg",
+				"alt": "Mirra Alfassa also known as 'The Mother'"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [79.810556, 12.006944]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Mauritian Declaration of Independence",
+				"day": "12",
+				"month": "03",
+				"datetxt": "12th March",
+				"location": "Champ de Mars Racecourse, Port Louis, Mauritius",
+				"description": " Towards the end of the 1950s, the Mauritian government publicly committed to the goal of independence.<br>Riots<br>Chagos...<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit.<br><br>Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
+				"keywords": "Independence",
+				"image": "Ramgoolam.jpg",
+				"alt": "Sir Seewoosagur Ramgoolam"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [57.510089, -20.169159]
 			}
 		
 		},
@@ -236,6 +313,46 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
+				"title": "Student protest in Senegal",
+				"day": "27",
+				"month": "05",
+				"datetxt": "27th May",
+				"location": "University of Dakar, Dakar, Senegal",
+				"description": "On 27th May the Association of Senegalese Students and the Dakar Association of Students at the University of Dakar announced that they would go on strike and boycott examinations. They were responding to a reduction in scholarship payments by the government of President Léopold Sédar Senghor and his proposed Africanization of the university. Two days later the Special Armed Forces entered the campus to disperse the protestors. The subsequent clashes resulted in 800 arrests, seventy injuries to students and the death of Salmon Khoury, a Lebanese student. <br><br>In response to the government's violent actions the National Union of Senegalese Workers (UNTS) called for a national strike in support of the students along with other demands. Riots also erupted in poor neighbourhoods near the campus, which spread to other cities including other cities like Saint-Louis, Thiès and Kaolack. These riots lasted for days, prompting Senghor to declare a state of emergency on 31st May. The Senegalese army were instructed to restore order with the support of French forces.<br><br>Senghor closed the university indefinitely and expelled foreign students. In June a reshuffled government entered into negotiations with the UNTS meeting some their demands for wage increases. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"keywords": "Protest",
+				"image": "",
+				"alt": "",
+				"attr": ""
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-17.463333, 14.686944]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"title": "Ford sewing machinists strike",
+				"day": "7",
+				"month": "06",
+				"datetxt": "7th June",
+				"location": "Ford Dagenham plant, Dagenham, London",
+				"description": "On 7th June women sewing machinists at the Ford Dagenham, led by Rose Boland, Eileen Pullen, Vera Sime, Gwen Davis and Sheila Douglass, walked out in protest of having their jobs being regraded from more-skilled to less-skilled resulting in a pay cut. The women at the Halewood plant on Merseyside later followed suit. When stocks of the seat covers that the women made ran low all production halted at the Dagenham plant. The strike ended after three weeks following the intervention of Barbara Castle, who was the Secretary of State for Employment and Productivity. The women received an immediate pay rise of 8% followed the restoration of their previous rate one year later, although they would still be graded as less-skilled workers.<br><br>The sewing machinists' action inspired other women trades unionists to found the National Joint Action Campaign Committee for Women's Equal Rights (NJACCWER) later in the year. The movement realised their goal with the passage of the Equal Pay Act 1970. The Act came into force in 1975 prohibiting inequal pay and conditions of employment between men and women.",
+				"keywords": "Women's Rights, Strike",
+				"image": "DagenhamWomen.jpeg",
+				"alt": "The striking women meet Barbara Castle",
+				"attr": ""
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.153056, 51.515]
+			}
+		
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"title": "Sexta-feira sangrenta",
 				"day": "21",
 				"month": "06",
@@ -273,13 +390,13 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
-				"title": "Feminists protested the Miss America Pageant",
+				"title": "New York Radical Women protested the Miss America Pageant",
 				"day": "07",
 				"month": "09",
 				"datetxt": "7th September",
 				"location": "Atlantic City, New Jersey",
 				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
-				"keywords": "Protest",
+				"keywords": "Women's Rights, Protest",
 			},
 			"geometry": {
 				"type": "Point",
@@ -331,7 +448,7 @@ var testdb =
 				"datetxt": "10th December",
 				"location": "Tokyo Japan",
 				"description": "On the morning of 10th December 1968, a young man wearing the uniform of a motorcycle police officer pulled over black Nissan Cedric luxury sedan carrying four employees of the <i>Nihon Shintaku Ginko</i> (Nippon Trust Bank) and three metal cases containing ¥294,307,500.<br><br>The police officer told the car's occupants that he had just been informed that their bank and the bank manager's house had been blown up, and that there was an explosive device planted in their vehicle. The four men exited the car while the police officer searched beneath the car. When flames and smoke billowed from the car the police officer warned them that the car was going to explode. The four men dashed to find cover behind a wall. Peeking over the wall they saw the policeman get in the car and drive away. When there was no explosion the four men found what looked like a warning flare in the road. They also noticed that the motorcycle was a crudely-made replica.<br><br>Despite the efforts of the Tokyo Metropolitan Police Department the thief escaped after transferring the boxes to a previously stolen car, which he also later abandoned after transferring the boxes to yet another stolen car. The police launched a the largest investigation in Japanese history. Lasting seven years the investigation involved around 170,000 officers. In 1988 the statute of limitations passed, meaning that the thief could no longer be tried. The crime remains unsolved.",
-				"keywords": "Crime",
+				"keywords": "Law Enforcement",
 				"image": "300milyen.jpg",
 				"alt": "Wanted photo released by the Metropolitan Police Department as a montage of the perpetrators of the 300 million yen robbery.",
 				"attr": "<a href='https://creativecommons.org/publicdomain/zero/1.0/deed.en' target='_blank'>CCO 1.0</a> 警視庁, 日本語: 三億円事件の犯人のモンタージュ写真として、1968年12月21日に警視庁が公開した手配写真。 <a href='https://commons.wikimedia.org/wiki/File:%E4%B8%89%E5%84%84%E5%86%86%E4%BA%8B%E4%BB%B6.jpg' target='_blank'>Source</a>"

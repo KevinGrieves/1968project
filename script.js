@@ -36,67 +36,88 @@ var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
 
 var nukeIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--radioactive.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var voteIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--cross-mark-button.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var techIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--light-bulb.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var fistIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--raised-fist.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var warIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--crossed-swords.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var fireIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--fire.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var coupIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--military-helmet.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var legalIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--balance-scale.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var musicIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--musical-note.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
 
 var crimeIcon = new L.Icon({
 	iconUrl: './icons/fluent-emoji-high-contrast--police-car-light.png',
-	iconSize:     [24, 24],
-	iconAnchor:   [12, 12]
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
 });
-
-
-
-
+var unityIcon = new L.Icon({
+	iconUrl: './icons/fluent-emoji-high-contrast--handshake.png',
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
+});
+var independenceIcon = new L.Icon({
+	iconUrl: './icons/fluent-emoji-high-contrast--broken-chain.png',
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
+});
+var strikeIcon = new L.Icon({
+	iconUrl: './icons/fluent-emoji-high-contrast--placard.png',
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
+});
+var womenIcon = new L.Icon({
+	iconUrl: './icons/fluent-emoji-high-contrast--female-sign.png',
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
+});
+var sportIcon = new L.Icon({
+	iconUrl: './icons/fluent-emoji-high-contrast--soccer-ball.png',
+	iconSize:     [32, 32],
+	iconAnchor:   [16, 16]
+});
 
 
 // Prevent default action on search form
@@ -122,8 +143,23 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+var markerLayer = new L.geoJSON(testdb, {
+	onEachFeature: onEachFeature
+});
+
+
+const cluster = L.markerClusterGroup({
+	   showCoverageOnHover: false,
+	   zoomToBoundsOnClick:false
+});
+cluster.addLayer(markerLayer);
+map.addLayer(cluster);
+
+prevDate = '';
+
+
 function markerClick(e) {
-	
+	console.log(map.getZoom());
 	clickedMarker = e.target;
 	eventTitle = clickedMarker.feature.properties.title;
 	eventLoc = clickedMarker.feature.properties.location;
@@ -155,9 +191,9 @@ function markerClick(e) {
 	};
 	
 	let coOrds = clickedMarker.getLatLng();
-	map.flyTo([coOrds.lat, coOrds.lng], 5);
+	map.flyTo([coOrds.lat, coOrds.lng], 10);
 	$("#infoBox").modal('show');
-
+	
 }
 
 function cntryClick(e) {
@@ -230,8 +266,23 @@ function onEachFeature(feature, layer) {
 		case "Music":
 			layer.setIcon(musicIcon);						
 			break;
-		case "Crime":
+		case "Law Enforcement":
 			layer.setIcon(crimeIcon);						
+			break;
+		case "Unity":
+			layer.setIcon(unityIcon);						
+			break;
+		case "Independence":
+			layer.setIcon(independenceIcon);						
+			break;
+		case "Strike":
+			layer.setIcon(strikeIcon);						
+			break;
+		case "Women's Rights":
+			layer.setIcon(womenIcon);						
+			break;
+		case "Sport":
+			layer.setIcon(sportIcon);						
 			break;
 	};
 	
@@ -278,7 +329,7 @@ function onEachFeature(feature, layer) {
 		};
 			
 		var coOrds = layer.getLatLng();
-		map.flyTo([coOrds.lat, coOrds.lng], 5);
+		map.flyTo([coOrds.lat, coOrds.lng], 10);
 		$("#infoBox").modal('show');
 			
 	};
@@ -370,16 +421,25 @@ function applyFilter(feature) {
 
 
 function refreshMap() {
+	
 	let newEventList = document.getElementById('eventList');
 	newEventList.innerHTML='';
 	
+	cluster.clearLayers();
 	
-	markerLayer.clearLayers();
+	
+	
+	
 	markerLayer = L.geoJSON(testdb, {
 		filter: applyFilter,
 		onEachFeature: onEachFeature,
 		
-	}).addTo(map);
+	});
+	
+	cluster.addLayer(markerLayer);
+	map.addLayer(cluster);
+	
+	
 	map.flyTo([40, -25], 2.25)
 	prevDate = '';
 	
@@ -389,11 +449,6 @@ function refreshMap() {
 }
 
 
-var markerLayer = new L.geoJSON(testdb, {
-	
-	onEachFeature: onEachFeature
-}).addTo(map);
-prevDate = '';
 
 
 function changeKeyword(keyword) {
