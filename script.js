@@ -12,6 +12,8 @@ window.addEventListener('load', () => {
 
 // const mnthSel = document.querySelector("#mnth");
 
+
+
 var mnthNum = 0;
 var dayNum = 0;
 var mnthArray = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -143,10 +145,15 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-var markerLayer = new L.geoJSON(testdb, {
+var evntCnt = 0;
+var edtCnt = 0;
+
+var markerLayer = new L.geoJSON(eventDB, {
 	onEachFeature: onEachFeature
 });
 
+console.log("Event count:" + evntCnt);
+console.log("To edit count:" + edtCnt);
 
 const cluster = L.markerClusterGroup({
 	   showCoverageOnHover: false,
@@ -214,6 +221,14 @@ function cntryClick(e) {
 }
 
 function onEachFeature(feature, layer) {
+	
+	evntCnt++;
+	if (feature.properties.description.indexOf('Lorem ipsum') !== -1) {
+		edtCnt++;
+	}
+	
+	
+	
 	
 	layer.on({
 		click: markerClick
@@ -430,7 +445,7 @@ function refreshMap() {
 	
 	
 	
-	markerLayer = L.geoJSON(testdb, {
+	markerLayer = L.geoJSON(eventDB, {
 		filter: applyFilter,
 		onEachFeature: onEachFeature,
 		
