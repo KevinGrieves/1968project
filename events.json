@@ -1,4 +1,4 @@
-var testdb = 
+var eventDB = 
 {
 	"type": "FeatureCollection",
 		"features": [
@@ -20,7 +20,8 @@ var testdb =
 				"coordinates": [-0.13188, 51.49122]
 			}
 		
-		},
+	},
+	
 		{
 			"type": "Feature",
 			"properties": {
@@ -97,7 +98,7 @@ var testdb =
 			}
 		
 		},		
-				{
+		{
 			"type": "Feature",
 			"properties": {
 				"title": "First Khmer Rouge offensive",
@@ -376,7 +377,7 @@ var testdb =
 				"day": "18",
 				"month": "07",
 				"datetxt": "18th July",
-				"location": "Mountain View, California",
+				"location": "Mountain View, California, USA",
 				"description": "In the late '60s, the chemist and physicist, Dr. Gordon E. Moore, and the co-inventor of the integrated circuit, Robert N. Noyce departed Fairchild Semiconductor to set up their own company. Initially named NM Electronics they soon renamed it to Integrated Electronics Corporation, or Intel for short. <br><br>With money raised by the venture capitalist Arthur Rock, who became Intel's first chairman, Moore and Noyce founded their new company on 18th July 1968, based in Santa Clara, California, which was at the centre of the area soon to be known as Silicon Valley.<br><br>In 1971, the company released the Intel 4004, the first commercially available microprocessor. When the personal computing boom started, Intel were well placed to make the most of it, inventing the x86 line of computer processors, which IBM used in their PCs.",
 				"keywords": "Technology",
 				"image": "Intel.png",
@@ -390,11 +391,29 @@ var testdb =
 		{
 			"type": "Feature",
 			"properties": {
+				"title": "France detonated its first thermonuclear bomb",
+				"day": "24",
+				"month": "08",
+				"datetxt": "24th August",
+				"location": "Fangataufa, Tuamotu Archipelago, French Polynesia.",
+				"description": "France conducted its first nuclear weapon test on 13th February 1960 in French Algeria, becoming the fourth country to test an atom bomb after the United States, the Soviet union and the United Kingdom. Over the next eight years the French conducted twenty-nine further tests of fission devices, with the last twelves of these taking place in French Polynesia, which the French government decided would be more suitable for testing the more powerful thermonuclear devices. The first of these hydrogen bomb tests, <i>Opération Canopus</i>, took place on 24th August 1968 over Fangataufa, an atoll in the Tuamotu Archipelago in French Polynesia. The three ton device was suspended below a large hydrogen balloon. The 2.6 megaton yield was the most of any French nuclear weapon test. With the successful detonation, France become the fifth thermonuclear power after the United States, the Societ Union, the United Kingdom and China.",
+				"keywords": "Nuclear weapons",
+				"image": "Canopus.jpg",
+				"alt": "<i>Opération Canopus</i> mushroom cloud",
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-138.643889, -22.227778]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"title": "New York Radical Women protested the Miss America Pageant",
 				"day": "07",
 				"month": "09",
 				"datetxt": "7th September",
-				"location": "Atlantic City, New Jersey",
+				"location": "Atlantic City, New Jersey, USA",
 				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien ante, maximus eget lectus et, consectetur interdum velit. Morbi eget vehicula diam, in elementum nisl. Mauris lacus eros, commodo a elementum at, molestie ac tortor. Morbi fermentum, metus et consectetur.",
 				"keywords": "Women's Rights, Protest",
 			},
